@@ -1,12 +1,9 @@
 const db = require('./index.js');
 const Prop = require('./Prop.js');
-const names = require('./namesGen.js');
-const descriptions = require('./textGen');
 const amens = require('./amenGen.js');
 const calendar = require('./calendarGen.js');
-// const { minStay, calendar } = require('./calendarGen.js');
-
-// Should probably change the name of this to 'seed' later
+const descriptions = require('./textGen');
+const names = require('./namesGen.js');
 
 var ids = [];
 
@@ -25,18 +22,16 @@ var genProp = function() {
     return Math.random() > .5 ? true : false;
   };
 
-  // var randomNum = (min, max) => Math.floor(Math.random() * ((max * .999) - min) + min);
   var randomNum = function(min, max) {
     // 'max' to be the highest value you want selected
     return Math.floor(Math.random() * (max * .999 - min + 1) + min)
   }
-  // var randomNum2 = (min, max) => Math.random() * ((max * .999) - min) + min;
   var randomNum2 = function(min, max) {
-    // 'max' to be the highest value you want selected
+    // No rounding down of returned value
     return Math.random() * (max * .999 - min + 1) + min
   }
   var randomNum3 = function(min, max) {
-    // 'max' to be the highest value you want selected
+    // allows for max values less than 1
     return Math.random() * (max - min) + min
   }
   var getGuestNum = () => randomNum(25, 8);
@@ -45,7 +40,6 @@ var genProp = function() {
   const numBedRooms = Math.floor(guestNum/4);
   var numBathRooms = Math.floor(numBedRooms * randomNum2(.7, 1.5));
 
-  // var bedsArr = new Array(numBedRooms);
   var getBeds = (num) => {
     switch(num) {
       case 1:
@@ -59,7 +53,7 @@ var genProp = function() {
   var beds = [];
   for (var i = 0; i < numBedRooms; i++) {
     beds[i] = getBeds(randomNum(1,3));
-  };
+  }
 
   var numBeds = () => beds.reduce((total, val) => total + val.num, 0);
   var bedNum = numBeds();
@@ -70,9 +64,6 @@ var genProp = function() {
   }
   var cal = calendar.getCal();
   var minStay = cal[0].minStay;
-  // console.log(cal);
-
-  // console.log(id, names.getName(id), randomBoolean(), guestNum, numBedRooms, numBathRooms, numBeds(), beds);
 
   var propObj = {
     propId: id,
@@ -107,9 +98,6 @@ var genProp = function() {
   return propObj;
 }
 
-// var test = genProp();
-// console.log(test);
-
 var sample = [];
 for (var i = 0; i < 100; i++) {
   sample[i] = genProp();
@@ -117,7 +105,7 @@ for (var i = 0; i < 100; i++) {
 
 const insertSampleProps = function() {
   Prop.create(sample)
-    .then((results) => {
+    .then(() => {
       console.log('sample data save success!');
       db.close();
     })

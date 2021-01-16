@@ -1,6 +1,5 @@
 
 
-// let [month, date, year] = new Date().toLocaleDateString("en-US").split("/");
 
 var getCal = () => {
   Date.prototype.addDays = function(days) {
@@ -34,25 +33,24 @@ var getCal = () => {
 
   var round5 = (x) => Math.ceil(x/5) * 5;
 
+  // repeat values allow for weighted randomness
   var getMinStay = [2, 2, 2, 3, 3, 3, 3, 3, 7, 7, 14];
   var minStay = getMinStay[random(0, getMinStay.length - 1)];
 
   var dateArray = getDates(new Date(), (new Date()).addDays(180));
-  // first let's map an obj for each one out
   dateArray = dateArray.map((val) => {
     return {date: val}
   })
 
   var addDateInfo = function(objArr) {
-    var weekNum = 1;
     var weeklyDisc = getRandomDisc();
     objArr.forEach((val, i) => {
       if (i > 0) {
         if (val.date.getDay() === 0) {
-          weekNum++;
           weeklyDisc = getRandomDisc();
         }
       }
+      // increase weight for the weekend
       val.date.getDay() >= 5 ? val.rate = round5(baseRate * 1.25) : val.rate = baseRate;
       val.discPerc = weeklyDisc;
       val.available = true;
@@ -69,10 +67,7 @@ var getCal = () => {
     var startDate = random(firstDay, lastDate);
     var numOfDays = minStay;
     for (var i = startDate; i < (startDate + numOfDays); i++) {
-      // console.log('i: ', i);
-      // console.log(calObj[i]);
       calObj[i].available = false;
-      // console.log(calObj[i]);
     }
     return calObj;
   }

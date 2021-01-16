@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server",
     "build": "webpack",
-    "watch": "webpack -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "kill": "kill -9 $(lsof -i :3000) &>/dev/null | exit 0",
+    "seed": "node ./database/propGen.js",
+    "start": "nodemon --signal SIGTERM server/index.js",
+    "start:db": "mongod",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack -w"
   },
   "author": "",
   "license": "ISC",
@@ -15,12 +18,15 @@
     "assert": "^2.0.0",
     "axios": "^0.20.0",
     "body-parser": "1.19.0",
+    "circleci": "^0.3.3",
     "express": "^4.17.1",
+    "fuser": "^2.0.0",
     "jquery": "^3.5.1",
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.6",
     "morgan": "1.9.1",
     "mysql": "^2.18.1",
+    "pstree.remy": "^1.1.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -29,7 +35,10 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
+    "eslint": "^7.18.0",
+    "eslint-plugin-react": "^7.22.0",
     "nodemon": "^2.0.4",
+    "supertest": "^6.1.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }

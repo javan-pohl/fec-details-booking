@@ -1,2 +1,32 @@
 const db = require('./index.js');
-const Blog = require('./Prop.js');
+const Prop = require('./Prop.js');
+
+module.exports = {
+  getAll: function(req, res) {
+    Prop.find({})
+      .catch((err) => {
+        console.log('err', err);
+        // db.close();
+        res.status(404).send(err);
+      })
+      .then((results) => {
+        console.log('success!');
+        // db.close();
+        res.status(200).send(results);
+      })
+  },
+  getById: function(req, res) {
+    var int = parseInt(req.params.propId);
+    Prop.find({propId: int})
+      .catch((err) => {
+        console.log('err', err);
+        // db.close();
+        res.status(404).send(err);
+      })
+      .then((results) => {
+        console.log('success!');
+        // db.close();                
+        res.status(200).send(results);
+      })
+  }
+}

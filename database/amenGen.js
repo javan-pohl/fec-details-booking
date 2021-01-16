@@ -12,10 +12,6 @@ for (var i = 0; i < amenArr.length; i++) {
   } else {
     amenObs.push({category: category, name: amenArr[i], available: Math.random() > .05 ? true : false});
   }
-};
-
-var getAmens = (propId) => amenObs[propId - 1];
-
-// console.log(amenObs);
+}
 
 module.exports.getAmens = amenObs;
