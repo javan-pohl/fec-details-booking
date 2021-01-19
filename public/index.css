@@ -1,0 +1,167 @@
+#main {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
+#main > div{
+  border-radius: 5px;
+}
+
+:root {
+  --header-font-size: 16px;
+  --detail-border: 1px solid rgb(230, 230, 230);
+}
+
+.flex-parent-horz {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.center {
+  text-align: center;
+}
+
+.outer {
+  max-width: 1268px;
+  width: 85%;
+  margin: auto auto;
+  display: flex;
+  border: 1px solid green;
+}
+
+
+.details{
+  font-size: 90%;
+  flex-basis: 55%;
+  height: 2000px;
+  border: 1px solid green;
+}
+
+.details > div{
+  padding: 20px 0px 20px 0px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.shrink {
+  transform:scale(0.8);
+}
+
+.intro-title {
+  color: rbg(34, 34, 34);
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.intro-breakdown {
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  font-size: 13px;
+}
+
+.intro-breakdown-dot {
+  margin: 0px;
+}
+
+.booking {
+  flex-basis: 45%;
+}
+
+.booking-module {
+  position: sticky;
+  margin: 0 0 0 auto;
+  top: 0;
+  width: 80%;
+  height: 200px;
+  border: 1px solid pink;
+  border-radius: 5px;
+}
+.calendar-block {
+  position: relative;
+  z-index: 0;
+  min-height: 300px;
+  background-color: green;
+}
+.calendar-module {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  z-index: 1;
+  background-color: grey;
+  min-height: 300px;
+  width: 100%;
+}
+
+.calendar-title {
+  font-size: var(--header-font-size);
+}
+
+.cal-scroll-bar {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+}
+
+.cal-button {
+  --button-size: 25px;
+  height: var(--button-size);
+  width: var(--button-size);
+  border: none;
+  border-radius: 30px;
+  background-color: white;
+}
+
+.cal-button:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.cal-button:focus {
+  border: none;
+  outline: none;
+}
+
+#calLeftButton {
+  float: left;
+}
+
+#calRightButton {
+  float: right;
+}
+.month-module {
+  flex-basis: 1;
+  width: 100%;
+  background-color: pink;
+}
+.month-header-div {
+  background-color: green;
+  width: fit-content;
+  margin: auto auto 15px auto;
+}
+
+.day-of-week {
+  background-color: green;
+}
+
+.cal-days-block {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: green;
+}
+
+.cal-days {
+  flex: 1 0 14%;
+  text-align: center;
+  padding-left: 1px;
+  background-color: pink;
+  border: none;
+  outline: none;
+}
+
+.cal-days:focus {
+  border: none;
+  outline: none;
+  background-color: green;
+}

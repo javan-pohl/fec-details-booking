@@ -1,7 +1,11 @@
 const express = require('express');
 const path = require('path');
+var cors = require('cors');
 const config = require('../webpack.config.js');
 const db = require('../database/getProps.js');
+
+// auto-refresh html page -- more below
+const livereload = require('livereload');
 
 //middleware
 const morgan = require('morgan');
@@ -18,19 +22,20 @@ const app = express();
 // logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());
-app.use(parser.urlencoded({extended: false}));
+app.use(parser.urlencoded({extended: true}));
+// auto refresh of webpage
 
 // set-up routes
 // app.use('/api', router);
 // app.use('/api', mongoRouter);
 
+const liveReloadServer = livereload.createServer();
+
 // serve the client files (webpage)
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/api/props/:propId', (req, res) => {
+app.get('/api/props/:propId', cors(), (req, res) => {
   console.log('GET request in process...');
-  // res.send('Hello from the server!');
-  // db.getAll(req, res);
   db.getById(req, res);
 });
 

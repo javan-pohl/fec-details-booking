@@ -6,12 +6,10 @@ module.exports = {
     Prop.find({})
       .catch((err) => {
         console.log('err', err);
-        // db.close();
         res.status(404).send(err);
       })
       .then((results) => {
         console.log('success!');
-        // db.close();
         res.status(200).send(results);
       })
   },
@@ -20,12 +18,10 @@ module.exports = {
     Prop.find({propId: int})
       .catch((err) => {
         console.log('err', err);
-        // db.close();
         res.status(404).send(err);
       })
       .then((results) => {
-        console.log('success!');
-        // db.close();                
+        console.log('success!');         
         res.status(200).send(results);
       })
   }

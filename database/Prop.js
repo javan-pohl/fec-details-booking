@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 const PropSchema = new mongoose.Schema({
   propId: {type: Number, required: true, unique: true, index: true},
-  hostName: {type: {first: String, last: String}, required: true},
+  hostName: {type: {firstName: String, lastName: String}, required: true},
   imgs: [String],
   numGuest: Number,
   numBedRooms: Number,
@@ -30,6 +30,7 @@ const PropSchema = new mongoose.Schema({
   calendar: [{date: Date, available: Boolean, rate: Number, discPerc: Number}],
   minStay: Number,
   reviewRating: Number,
+  numReviews: Number,
   cityTaxRate: Number,
   countyTaxRate: Number,
   StateTaxRate: Number,
