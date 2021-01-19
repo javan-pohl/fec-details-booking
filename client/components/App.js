@@ -47,6 +47,10 @@ class App extends React.Component {
       .catch( err => console.log('error: ... ', err))
   }
 
+  handleDateClick(i) {
+    console.log(i);
+  }
+
   renderBooking() {
     if (this.state.isLoaded) {
       return <Details cal={this.state.propData.calendar}/>
@@ -57,7 +61,7 @@ class App extends React.Component {
 
   renderCalendar() {
     if (this.state.isLoaded) {
-      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} date={this.state.currentDate} calendar={this.state.calendar}/>
+      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} date={this.state.currentDate} calendar={this.state.calendar} onDateClick={(i) => this.handleDateClick(i)}/>
     } else {
       return <div>Waiting on data to load...</div>
     }

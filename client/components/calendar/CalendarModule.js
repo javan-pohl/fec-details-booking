@@ -25,7 +25,7 @@ const DaysOfWeek = () => {
   )
 }
 
-class Month extends React.Component {
+class CalendarModule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,11 +41,10 @@ class Month extends React.Component {
     var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth() + 1, 1);
     var month = firstDay.getMonth();
     var year = '' + firstDay.getYear();
+    year = '20' + year.substring(1);
     var numDays = (lastDay - firstDay) / (1000*60*60*24);
     var numWeeks = Math.ceil((numDays + firstWeekday - .99) / 7);
-    month = month;
-    year = year.substring(1);
-    year = '20' + year;
+    
     var arrayDays = [];
     var startingDate = 1;
     for (var i = 0; i < numWeeks * 7; i++) {
@@ -56,7 +55,7 @@ class Month extends React.Component {
         arrayDays[i] = null;
       }
     }
-    var calDays = arrayDays.map((val, i) => <button className='cal-days' id={val === null ? 0 : `${month}/${val}/${year}`} key={i}>{val}</button>);
+    var calDays = arrayDays.map((val, i) => <button className='cal-days' id={val === null ? 0 : `${month + 1}/${val}/${year}`} key={i} onClick={() => this.props.onDateClick(`${month + 1}/${val}/${year}`)}>{val}</button>);
     this.setMY(calDays, month, year);
   }
   setMY(days, monthNum, yearNum) {
@@ -89,16 +88,17 @@ class Month extends React.Component {
     )
   }
 }
-class CalendarModule extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <Month date={this.props.date}/>
-    )
-  }
-}
-
 
 export default CalendarModule;
+
+// class CalendarModule extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     return (
+//       <Month date={this.props.date}/>
+//     )
+//   }
+// }
+
