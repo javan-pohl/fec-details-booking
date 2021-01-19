@@ -102,8 +102,8 @@ class Calendar extends React.Component {
           <div className="calendar-block"> 
             <ScrollBar />
             <div className="calendar-module">
-              <CalendarModule />
-              <CalendarModule />
+            <CalendarModule date={this.state.firstMonth.firstDay} onDateClick={(i) => this.props.onDateClick(i)}/>
+            <CalendarModule date={this.state.firstMonth.firstDay} onDateClick={(i) => this.props.onDateClick(i)}/>
             </div>
           </div>
         )

@@ -59,7 +59,9 @@ class CalendarModule extends React.Component {
       var dateValue = null;
       if (val !== null) {
         dateValue = `${month + 1}/${val}/${year}`;
-        return <button className='cal-days' id={dateValue} key={i} onClick={() => this.props.onDateClick(dateValue)}>{val}</button>
+        return (
+          <button className='cal-days' id={dateValue} key={i} onClick={() => this.props.onDateClick(dateValue)}><div className="cal-days-inner" key={i}>{val}</div></button>
+        )
       } else {
         return <div className='cal-days' id={dateValue} key={i}>{val}</div>
       }
