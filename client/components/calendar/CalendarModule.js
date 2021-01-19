@@ -55,10 +55,19 @@ class CalendarModule extends React.Component {
         arrayDays[i] = null;
       }
     }
-    var calDays = arrayDays.map((val, i) => <button className='cal-days' id={val === null ? 0 : `${month + 1}/${val}/${year}`} key={i} onClick={() => this.props.onDateClick(`${month + 1}/${val}/${year}`)}>{val}</button>);
-    this.setMY(calDays, month, year);
+    var calDays = arrayDays.map((val, i) => { 
+      var dateValue = null;
+      if (val !== null) {
+        dateValue = `${month + 1}/${val}/${year}`;
+        return <button className='cal-days' id={dateValue} key={i} onClick={() => this.props.onDateClick(dateValue)}>{val}</button>
+      } else {
+        return <div className='cal-days' id={dateValue} key={i}>{val}</div>
+      }
+    });
+
+    this.setDMY(calDays, month, year);
   }
-  setMY(days, monthNum, yearNum) {
+  setDMY(days, monthNum, yearNum) {
     var monthArr = ['January','February','March','April','May','June','July',
     'August','September','October','November','December'];
     var month = monthArr[monthNum];

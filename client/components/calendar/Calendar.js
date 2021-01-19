@@ -91,11 +91,11 @@ class Calendar extends React.Component {
       if (this.state.windowWidth < 850) {
         return (
           <div className="calendar-block"> 
-            <ScrollBar />
-            <div className="calendar-module">
-              <CalendarModule date={this.state.firstMonth.firstDay} onDateClick={(i) => this.props.onDateClick(i)}/>
-            </div>
-          </div>
+              <ScrollBar />
+              <div className="calendar-module">
+                <CalendarModule date={this.state.firstMonth.firstDay} onDateClick={(i) => this.props.onDateClick(i)}/>
+              </div>            
+            </div>         
         )
       } else {
         return (

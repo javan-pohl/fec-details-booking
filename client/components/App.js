@@ -49,6 +49,13 @@ class App extends React.Component {
 
   handleDateClick(i) {
     console.log(i);
+    var dateObj = new Date(i);
+    console.log(dateObj);
+    if(!this.state.checkIn) {
+      this.setState({
+        checkIn: i
+      })
+    }
   }
 
   renderBooking() {
