@@ -31,8 +31,6 @@ class App extends React.Component {
           console.log(results);
           this.setState({
             propData: results[0],
-            checkIn: null,
-            checkOut: null,
             roomInfo: {
               numGuest: results[0].numGuest,
               numBedRooms: results[0].numBedRooms,
