@@ -27,7 +27,7 @@ const PropSchema = new mongoose.Schema({
   descriptionBody: String,
   hostEmail: String,
   amenities: [{category: String, name: String, available: Boolean}],
-  calendar: [{date: Date, available: Boolean, rate: Number, discPerc: Number}],
+  calendar: [{date: Date, dateCount: Number, available: Boolean, rate: Number, discPerc: Number}],
   minStay: Number,
   reviewRating: Number,
   cityTaxRate: Number,

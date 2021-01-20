@@ -20,6 +20,8 @@ class App extends React.Component {
         numBaths: null
       },
       currentDate: new Date(),
+      currentMonth: null,
+      displayMonth: null,
     }
   }
 
@@ -38,6 +40,8 @@ class App extends React.Component {
               numBaths: results[0].numBathRooms
             },
             hostName: results[0].hostName.firstName,
+            currentMonth: this.state.currentDate.getMonth(),
+            displayMonth: this.state.currentDate.getMonth(),
             isLoaded: true
           })
         }
@@ -48,12 +52,29 @@ class App extends React.Component {
   handleDateClick(i) {
     console.log(i);
     var dateObj = new Date(i);
-    console.log(dateObj);
+    console.log('on click: ', dateObj);
+    console.log('currentMonth: ', this.state.currentMonth);
     if(!this.state.checkIn) {
       this.setState({
         checkIn: i
       })
     }
+  }
+  handlePriorMonthClick() {
+    console.log('prior');
+    console.log(this.state.displayMonth, this.state.currentMonth);
+    if(this.state.currentMonth !== this.state.displayMonth) {
+      this.setState({
+        displayMonth: this.state.displayMonth - 1,
+      })
+    }
+  }
+  handleNextMonthClick() {
+    console.log('next month button clicked', this.state.displayMonth);
+    this.setState({
+      displayMonth: this.state.displayMonth + 1,
+    })
+    // this.render();
   }
 
   renderBooking() {
@@ -66,7 +87,7 @@ class App extends React.Component {
 
   renderCalendar() {
     if (this.state.isLoaded) {
-      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} date={this.state.currentDate} calendar={this.state.calendar} onDateClick={(i) => this.handleDateClick(i)}/>
+      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} date={this.state.currentDate} month={this.state.displayMonth} key={this.state.displayMonth} calendar={this.state.propData.calendar} onDateClick={(i) => this.handleDateClick(i)} onNextClick={() => this.handleNextMonthClick()} onPriorClick={() => this.handlePriorMonthClick()}/>
     } else {
       return <div>Waiting on data to load...</div>
     }

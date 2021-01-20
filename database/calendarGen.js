@@ -37,9 +37,9 @@ var getCal = () => {
   var getMinStay = [2, 2, 2, 3, 3, 3, 3, 3, 7, 7, 14];
   var minStay = getMinStay[random(0, getMinStay.length - 1)];
 
-  var dateArray = getDates(new Date(), (new Date()).addDays(180));
-  dateArray = dateArray.map((val) => {
-    return {date: val}
+  var dateArray = getDates(new Date('01/01/2021'), (new Date()).addDays(180));
+  dateArray = dateArray.map((val, i) => {
+    return {date: val, dateCount: i}
   })
 
   var addDateInfo = function(objArr) {
@@ -62,20 +62,28 @@ var getCal = () => {
   dateArray = addDateInfo(dateArray);
 
   var addRandomBlocks = function(calObj) {
-    var firstDay = 1;
-    var lastDate = 7;
+    var firstDay = 32;
+    var lastDate = 64;
     var startDate = random(firstDay, lastDate);
-    var numOfDays = minStay;
+    var numOfDays = minStay * 2;
     for (var i = startDate; i < (startDate + numOfDays); i++) {
       calObj[i].available = false;
     }
     return calObj;
   }
   dateArray = addRandomBlocks(dateArray);
+
+  // break into arrays of each month
+  // var monthsArr = [];
+  // for (var i = 0; i < dateArray.length; i++) {
+  //   console.log(dateArray[i].date.getMonth());
+  // }
+  console.log(dateArray);
   return dateArray;
 }
 
 // console.log(dateArray);
+getCal();
 
 
 module.exports.getCal = getCal;

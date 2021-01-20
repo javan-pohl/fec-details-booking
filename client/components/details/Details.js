@@ -11,7 +11,7 @@ class Details extends React.Component {
     }
   }
   renderView() {
-  console.log('details, this.props: ', this.props);
+  // console.log('details, this.props: ', this.props);
 
     if (this.props.hostName) {
       return <Intro hostName={this.props.hostName} roomInfo={this.props.roomInfo}/>

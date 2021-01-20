@@ -164,7 +164,7 @@
   background-color: white;
 }
 
-.cal-days:focus {
+.cal-days-available:focus {
   border: none;
   outline: none;
   background-color: green;
@@ -173,4 +173,8 @@
 .cal-days-inner{
   width:fit-content;
   margin: auto auto auto auto;
+}
+
+.cal-date-unavailable {
+  text-decoration: line-through;
 }

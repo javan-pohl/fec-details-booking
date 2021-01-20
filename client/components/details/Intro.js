@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Intro(props) {
-  console.log('test test test test test');
   return(
     <div className="intro">
       <div className="intro-left">

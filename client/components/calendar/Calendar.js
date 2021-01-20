@@ -27,11 +27,11 @@ const CalendarTitle = (props) => {
   }
 }
 
-const ScrollBar = () => {
+const ScrollBar = (props) => {
   return (
     <div className="cal-scroll-bar">
-      <button id="calLeftButton" className="cal-button">&lt;</button>
-      <button id="calRightButton" className="cal-button">&gt;</button>      
+      <button id="calLeftButton" className="cal-button" onClick={props.onPriorClick()}>&lt;</button>
+      <button id="calRightButton" className="cal-button" onClick={props.onNextClick()}>&gt;</button>      
     </div>
   )
 }
@@ -40,11 +40,16 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentMonth: this.props.month,
       firstMonth: {
-        firstDay: null
+        firstDay: null,
+        dateIndex: null,
+        dayObjs: null,
       },
       secondMonth: {
-        firstDay: null
+        firstDay: null,
+        dateIndex: null,
+        dayObjs: null
       },
       isLoaded: false,
       windowWidth: 800,
@@ -69,31 +74,55 @@ class Calendar extends React.Component {
 
   componentDidMount() {
     var today = this.props.date;
-    var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    var secondMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    console.log('this props month: ', this.props.month);
+    var firstDay = new Date(today.getFullYear(), this.props.month, 1);
+    var firstDayI = (firstDay - new Date(today.getFullYear(), 0, 1))/(1000 * 3600 * 24);
+    var secM1stDay = new Date(today.getFullYear(), this.props.month + 1, 1);
+    var secM1stDayI = (secM1stDay - new Date(today.getFullYear(), 0, 1))/(1000 * 3600 * 24);
 
     console.log('calendar did mount');
     console.log(today);
+    console.log(firstDay);
+    console.log(firstDayI);
+    var testDate = this.props.calendar[0].date;
+    console.log(testDate);
+    var testDate2 = new Date(testDate);
+    console.log('testDate2 ', testDate2);
+    // var firstArray = new Date(this.props.calendar[0].date.getFullYear(), this.props.calendar[0].date.getMonth(), 1);
+    // console.log(firstArray);
+    console.log(secM1stDay);
+    console.log(secM1stDayI);
+
     this.setState({
+      currentMonth: this.props.month,
       firstMonth: {
-        firstDay: firstDay
+        firstDay: firstDay,
+        dateIndex: firstDayI
       },
       secondMonth: {
-        firstDay: secondMonth
+        firstDay: secM1stDay,
+        dateIndex: secM1stDayI
       },
       isLoaded: true,
     })
-    // this.renderMonth(firstDay);
   }
+  // componentWillReceiveProps(newProps) {
+  //   this.setState({currentMonth: newProps.month })
+  // }
+  // handleChange = props => {
+  //   this.setState({
+  //     currentMonth: this.p
+  //   })
+  // }
   
   renderModules() {
     if (this.state.isLoaded) {
       if (this.state.windowWidth < 850) {
         return (
           <div className="calendar-block"> 
-              <ScrollBar />
+              <ScrollBar onNextClick={() => this.props.onNextClick} onPriorClick={() => this.props.onPriorClick}/>
               <div className="calendar-module">
-                <CalendarModule date={this.state.firstMonth.firstDay} onDateClick={(i) => this.props.onDateClick(i)}/>
+                <CalendarModule date={this.state.firstMonth.firstDay} dateIndex={this.state.firstMonth.dateIndex} today={this.props.date} cal={this.props.calendar} onDateClick={(i) => this.props.onDateClick(i)}/>
               </div>            
             </div>         
         )
