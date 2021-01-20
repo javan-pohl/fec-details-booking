@@ -36,9 +36,7 @@ class CalendarModule extends React.Component {
     }
   }
   componentDidMount() {
-    // var firstDay = this.props.date;
-    // var today = this.props.today;
-    // var firstDay = new Date(today.getFullYear(), this.props.month, 0);
+    console.log('calMOdule checkin date: ', this.props.checkIn);
 
     var firstDay = this.props.date;
     var firstWeekday = firstDay.getDay();
@@ -61,20 +59,18 @@ class CalendarModule extends React.Component {
         arrayDays[i] = null;
       }
     }
-    // console.log('arrayDays', arrayDays);
+
     var dateI = this.props.dateIndex;
+    var checkInObj = new Date(this.props.checkIn);
+    var checkOutObj = new Date(this.props.checkOut);
+
     var calDays = arrayDays.map((val, i) => { 
       var dateValue = null;
-      var divClass;
-      var buttonClass;
-      var clickFunction;
-      // console.log(this.props.cal)
+      var divClass, buttonClass, clickFunction;
       if (val !== null) {
         dateValue = `${month + 1}/${val}/${year}`;
-        // console.log(this.props.cal[dateI].available);
-        // console.log('new date dateValue ', new Date(dateValue));
-        // console.log('todays date: ', new Date(dateValue) < this.props.today);
-        if (new Date(dateValue) >= this.props.today || !this.props.cal[dateI].available) {
+        var dateValObj = new Date(dateValue);
+        if (dateValObj >= this.props.today && this.props.cal[dateI].available) {
           divClass = 'cal-days-inner cal-day-available';
           buttonClass = 'cal-days cal-days-available';
           clickFunction = () => this.props.onDateClick(dateValue);
@@ -82,7 +78,14 @@ class CalendarModule extends React.Component {
           divClass = 'cal-days-inner cal-date-unavailable';
           buttonClass = 'cal-days cal-days-unavailable';
         }
-        // this.props.cal[dateI].available ? classN = 'cal-days-inner cal-day-available' : classN = 'cal-days-inner cal-date-unavailable';
+        if (dateValObj.toString() === checkInObj.toString()) {
+          console.log('adding check-in-date class');
+          buttonClass += ' check-in-date';
+        }
+        if (dateValObj.toString() === checkOutObj.toString()) {
+          console.log('adding check-out-date class');
+          buttonClass += ' check-out-date';
+        }
         dateI++;
         return (
           <button className={buttonClass} id={dateValue} key={i} onClick={clickFunction}><div className={divClass} key={i}>{val}</div></button>

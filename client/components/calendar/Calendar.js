@@ -80,18 +80,21 @@ class Calendar extends React.Component {
     var secM1stDay = new Date(today.getFullYear(), this.props.month + 1, 1);
     var secM1stDayI = (secM1stDay - new Date(today.getFullYear(), 0, 1))/(1000 * 3600 * 24);
 
-    console.log('calendar did mount');
-    console.log(today);
-    console.log(firstDay);
-    console.log(firstDayI);
-    var testDate = this.props.calendar[0].date;
-    console.log(testDate);
-    var testDate2 = new Date(testDate);
-    console.log('testDate2 ', testDate2);
-    // var firstArray = new Date(this.props.calendar[0].date.getFullYear(), this.props.calendar[0].date.getMonth(), 1);
-    // console.log(firstArray);
-    console.log(secM1stDay);
-    console.log(secM1stDayI);
+    console.log('check-in: ', this.props.checkIn);
+    console.log('check-out: ', this.props.checkOut);
+
+    // console.log('calendar did mount');
+    // console.log(today);
+    // console.log(firstDay);
+    // console.log(firstDayI);
+    // var testDate = this.props.calendar[0].date;
+    // console.log(testDate);
+    // var testDate2 = new Date(testDate);
+    // console.log('testDate2 ', testDate2);
+    // // var firstArray = new Date(this.props.calendar[0].date.getFullYear(), this.props.calendar[0].date.getMonth(), 1);
+    // // console.log(firstArray);
+    // console.log(secM1stDay);
+    // console.log(secM1stDayI);
 
     this.setState({
       currentMonth: this.props.month,
@@ -122,7 +125,7 @@ class Calendar extends React.Component {
           <div className="calendar-block"> 
               <ScrollBar onNextClick={() => this.props.onNextClick} onPriorClick={() => this.props.onPriorClick}/>
               <div className="calendar-module">
-                <CalendarModule date={this.state.firstMonth.firstDay} dateIndex={this.state.firstMonth.dateIndex} today={this.props.date} cal={this.props.calendar} onDateClick={(i) => this.props.onDateClick(i)}/>
+                <CalendarModule date={this.state.firstMonth.firstDay} checkIn={this.props.checkIn} checkOut={this.props.checkOut} dateIndex={this.state.firstMonth.dateIndex} today={this.props.date} cal={this.props.calendar} onDateClick={(i) => this.props.onDateClick(i)}/>
               </div>            
             </div>         
         )

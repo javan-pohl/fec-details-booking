@@ -164,11 +164,7 @@
   background-color: white;
 }
 
-.cal-days-available:focus {
-  border: none;
-  outline: none;
-  background-color: green;
-}
+
 
 .cal-days-inner{
   width:fit-content;
@@ -177,4 +173,15 @@
 
 .cal-date-unavailable {
   text-decoration: line-through;
+}
+
+.check-in-date {
+  border: none;
+  outline: none;
+  background-color: green;
+}
+.check-out-date {
+  border: none;
+  outline: none;
+  background-color: green;
 }
