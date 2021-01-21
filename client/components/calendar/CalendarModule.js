@@ -36,7 +36,8 @@ class CalendarModule extends React.Component {
     }
   }
   componentDidMount() {
-    console.log('calMOdule checkin date: ', this.props.checkIn);
+    // this.checkMinStay();
+    console.log('calModule checkin date: ', this.props.checkIn);
 
     var firstDay = this.props.date;
     var firstWeekday = firstDay.getDay();
@@ -62,7 +63,10 @@ class CalendarModule extends React.Component {
 
     var dateI = this.props.dateIndex;
     var checkInObj = new Date(this.props.checkIn);
-    var checkOutObj = new Date(this.props.checkOut);
+    // get index of checkin
+    var checkOutObj = new Date(this.props.checkOut);    
+    var checkInStr = checkInObj.toString();
+    var checkOutStr = checkOutObj.toString();
 
     var calDays = arrayDays.map((val, i) => { 
       var dateValue = null;
@@ -70,21 +74,38 @@ class CalendarModule extends React.Component {
       if (val !== null) {
         dateValue = `${month + 1}/${val}/${year}`;
         var dateValObj = new Date(dateValue);
+        var dateValStr = dateValObj.toString();
         if (dateValObj >= this.props.today && this.props.cal[dateI].available) {
           divClass = 'cal-days-inner cal-day-available';
           buttonClass = 'cal-days cal-days-available';
-          clickFunction = () => this.props.onDateClick(dateValue);
+          if (!this.props.checkIn && this.checkMinStay(dateI) || this.props.checkOut && this.checkMinStay(dateI)) {
+            //then add click function in here
+            clickFunction = () => this.props.onDateClick(dateValue);
+          } 
         } else {
           divClass = 'cal-days-inner cal-date-unavailable';
           buttonClass = 'cal-days cal-days-unavailable';
         }
-        if (dateValObj.toString() === checkInObj.toString()) {
-          console.log('adding check-in-date class');
-          buttonClass += ' check-in-date';
-        }
-        if (dateValObj.toString() === checkOutObj.toString()) {
-          console.log('adding check-out-date class');
-          buttonClass += ' check-out-date';
+        if (this.props.checkOut) {
+          if (dateValStr === checkInStr) {
+            buttonClass += ' check-in-stay';
+          }
+          if (dateValObj > checkInObj && dateValObj < checkOutObj) {
+            buttonClass += ' stay-day';
+          }
+          if (dateValStr === checkOutStr) {
+            console.log('adding check-out-date class');
+            buttonClass += ' check-out-date';
+          }
+        } else {
+          if (dateValStr === checkInStr) {
+            console.log('adding check-in-date class');
+            buttonClass += ' check-in-date';
+          } 
+          console.log('datevalobj - checkinobj: ', dateValObj - checkInObj);
+          if (this.props.checkIn && dateValObj > checkInObj && (((dateValObj - checkInObj) / (1000*60*60*24)) >= this.props.minStay) && this.props.cal[dateI].available) {
+            clickFunction = () => this.props.onDateClick(dateValue);
+          } 
         }
         dateI++;
         return (
@@ -96,6 +117,22 @@ class CalendarModule extends React.Component {
     });
 
     this.setDMY(calDays, month, year);
+  }
+  checkMinStay(dateIndex) {
+    // take in the (proposed check-in... or check-out) date and return true or false depending on if the date is at least the min-stay length away from the next unavailable day (or, in the case of check-out, the distance from the check-in)
+    // maybe also trigger a state "check-in-warning" value?
+    if (!this.props.checkIn || (this.props.checkIn && this.props.checkOut)) {
+      var getNext = (element) => {
+        return element.available === false;
+      }
+      var indexNext = this.props.cal.findIndex(getNext);
+      // console.log('checkMinStay. CurrentIndex & IndexNextUnavailable: ', dateIndex, indexNext, indexNext - dateIndex);
+      if ((indexNext - dateIndex) >= this.props.minStay + 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
   setDMY(days, monthNum, yearNum) {
     var monthArr = ['January','February','March','April','May','June','July',

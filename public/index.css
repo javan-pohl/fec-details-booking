@@ -180,8 +180,21 @@
   outline: none;
   background-color: green;
 }
+.check-in-stay {
+  border: none;
+  outline: none;
+  background-color: green;
+  border-radius: 50% 0px 0px 50%;
+}
+.stay-day{
+  border: none;
+  outline: none;
+  background-color: green;
+  border-radius: 0px 0px 0px 0px;
+}
 .check-out-date {
   border: none;
   outline: none;
   background-color: green;
+  border-radius: 0px 50% 50% 0px;
 }

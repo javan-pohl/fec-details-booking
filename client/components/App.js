@@ -55,6 +55,13 @@ class App extends React.Component {
     var dateObj = new Date(i);
     console.log('on date click: ', dateObj);
     console.log('currentMonth: ', this.state.currentMonth);
+    if(this.state.checkInDate && this.state.checkOutDate) {
+      this.setState({
+        checkInDate: i,
+        checkOutDate: null,
+        key: this.state.key + 1,
+      })
+    }
     if(!this.state.checkInDate) {
       this.setState({
         checkInDate: i,
@@ -104,7 +111,7 @@ class App extends React.Component {
 
   renderCalendar() {
     if (this.state.isLoaded) {
-      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} date={this.state.currentDate} month={this.state.displayMonth} key={this.state.key} calendar={this.state.propData.calendar} onDateClick={(i) => this.handleDateClick(i)} onNextClick={() => this.handleNextMonthClick()} onPriorClick={() => this.handlePriorMonthClick()}/>
+      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} date={this.state.currentDate} month={this.state.displayMonth} minStay={this.state.propData.minStay} key={this.state.key} calendar={this.state.propData.calendar} onDateClick={(i) => this.handleDateClick(i)} onNextClick={() => this.handleNextMonthClick()} onPriorClick={() => this.handlePriorMonthClick()}/>
     } else {
       return <div>Waiting on data to load...</div>
     }
