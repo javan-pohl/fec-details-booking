@@ -1,3 +1,7 @@
+body {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
 #main {
   font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
 }
@@ -99,7 +103,7 @@
   z-index: 1;
   min-height: 300px;
   width: 100%;
-}
+}Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif
 
 .calendar-title {
   font-size: var(--header-font-size);
@@ -197,4 +201,68 @@
   outline: none;
   background-color: green;
   border-radius: 0px 50% 50% 0px;
+}
+
+.booking-upper-main {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto 20px auto;
+  width: 90%;
+}
+
+.booking-upper-main > * {
+  background-color: green;
+}
+
+.booking-reviews {
+  display: flex;
+}
+.booking-module {
+  border: 1px solid green;
+  border-radius: 5%;
+  margin-top: 85px;
+}
+.booking-middle {
+  font-size: 9px;
+  font-weight: bold;
+  border: 1px solid green;
+  margin: auto;
+  height: 45%;
+  width: 90%;
+  border-radius: 5%;  
+}
+.booking-middle-upper {
+  display: flex;
+}
+.booking-middle-upper-left {
+  border-right: 1px solid green;
+  border-bottom: 1px solid green;
+  padding: 8px 5px 5px 8px;
+
+}
+.booking-middle-upper-right{
+  border-left: 1px solid green;
+  border-bottom: 1px solid green;
+  padding: 8px 5px 5px 8px;
+}
+
+.booking-middle-upper > * {
+  width: 50%;
+}
+.booking-middle-lower {
+  padding: 8px 5px 5px 8px;
+}
+.check-button-div {
+  height: 40px;
+  width: 90%;
+  margin: 8px auto;
+  background-color: green;
+  border-radius: 8px;
+}
+.check-button {
+  font-size: 15px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3%;
 }

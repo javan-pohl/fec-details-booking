@@ -91,6 +91,7 @@ var genProp = function() {
     calendar: cal,
     minStay: minStay,
     reviewRating: randomNum2(1 , 4.9),
+    reviewNum: randomNum(4, 300),
     cityTaxRate: randomNum3(.005, .025),
     countyTaxRate: randomNum3(.005, .025),
     StateTaxRate: randomNum3(.005, .025)

@@ -1,6 +1,6 @@
 import React from 'react';
 import Details from './details/Details.js';
-import Booking from './booking/Booking.js';
+import BookingModule from './booking/BookingModule.js';
 import Calendar from './calendar/Calendar.js';
 
 class App extends React.Component {
@@ -12,6 +12,7 @@ class App extends React.Component {
       checkInDate: null,
       checkOutDate: null,
       lastAvailI: null,
+      firstAvail: null,
       hostName: null,
       isLoaded: false,
       roomInfo: {
@@ -23,6 +24,7 @@ class App extends React.Component {
       currentDate: new Date(),
       currentMonth: null,
       displayMonth: null,
+      maxRate: null,
       key: 0,
     }
   }
@@ -44,6 +46,7 @@ class App extends React.Component {
             hostName: results[0].hostName.firstName,
             currentMonth: this.state.currentDate.getMonth(),
             displayMonth: this.state.currentDate.getMonth(),
+            maxRate: this.getMaxRate(results[0].calendar),
             isLoaded: true
           })
         }
@@ -51,33 +54,35 @@ class App extends React.Component {
       .catch( err => console.log('error: ... ', err))
   }
   getLastAvailI(i) {
-    // we're going to find the last day before an unavailable day after check-in
-    // take in a check-in date object
-    // get index of check-in
-    console.log('getLastAvail: ', i);
     var firstDateI = new Date(this.state.propData.calendar[0].date);
     console.log(firstDateI);
     var checkInI = (i - firstDateI)/ (1000*60*60*24);
-    console.log(checkInI);
-    console.log(this.state.propData.calendar[checkInI].date);
-    // get index of first unavail date after
     var getNext = (element, i) => {
       return element.available === false && i > checkInI;
     }
     var indexNext = this.state.propData.calendar.findIndex(getNext, checkInI);
-    console.log('indexNext: ', indexNext);
-    // pausing this so I can find out why I can place my checkin date in March (but I can place the checkout date)
     if (indexNext > checkInI) {
       this.setState({
         lastAvailI: indexNext,
       })
     }
   }
+  getFirstAvail(date) {
+    this.setState({
+      firstAvail: date,
+    })
+  }
+  getMaxRate(cal) {
+    var maxRate = 0;
+    cal.forEach(val => {
+      if(val.rate > maxRate) {
+        maxRate = val.rate;
+      }
+    })
+    return maxRate;
+  }
   handleDateClick(i) {
-    // console.log(i);
     var dateObj = new Date(i);
-    // console.log('on date click: ', dateObj);
-    // console.log('currentMonth: ', this.state.currentMonth);
     if(this.state.checkInDate) {
       var checkInObj = new Date(this.state.checkInDate);
       console.log('hangleDateclick, checkinobj: ', checkInObj);
@@ -112,8 +117,6 @@ class App extends React.Component {
     }
   }
   handlePriorMonthClick() {
-    // console.log('prior');
-    // console.log(this.state.displayMonth, this.state.currentMonth);
     if(this.state.currentMonth !== this.state.displayMonth) {
       this.setState({
         displayMonth: this.state.displayMonth - 1,
@@ -122,27 +125,16 @@ class App extends React.Component {
     }
   }
   handleNextMonthClick() {
-    // console.log('next month button clicked', this.state.displayMonth);
-    console.log(this.state.displayMonth);
     if(this.state.displayMonth < 4) {
       this.setState({
         displayMonth: this.state.displayMonth + 1,
         key: this.state.key + 1
       })      
     }
-    // this.render();
   }
-  triggerStateChange() {
-    var val = this.state.key;
-    val++;
-    this.setState({
-      key: val,
-    })
-  }
-
   renderBooking() {
     if (this.state.isLoaded) {
-      return <Details cal={this.state.propData.calendar}/>
+      return <BookingModule cal={this.state.propData.calendar} maxRate={this.state.maxRate} reviewNum={this.state.propData.reviewNum} reviewRating={this.state.propData.reviewRating} />
     } else {
       return <div>Waiting on data to load...</div>
     }
@@ -170,7 +162,7 @@ class App extends React.Component {
           {this.renderDetails()}
           {this.renderCalendar()}
         </div>
-        <Booking />
+        {this.renderBooking()}
       </div>
     )
   }

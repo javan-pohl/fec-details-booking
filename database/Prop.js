@@ -30,6 +30,7 @@ const PropSchema = new mongoose.Schema({
   calendar: [{date: Date, dateCount: Number, available: Boolean, rate: Number, discPerc: Number}],
   minStay: Number,
   reviewRating: Number,
+  reviewNum: Number,
   cityTaxRate: Number,
   countyTaxRate: Number,
   StateTaxRate: Number,
