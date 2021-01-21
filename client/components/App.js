@@ -61,6 +61,7 @@ class App extends React.Component {
       return element.available === false && i > checkInI;
     }
     var indexNext = this.state.propData.calendar.findIndex(getNext, checkInI);
+    console.log('index next: ', indexNext);
     if (indexNext > checkInI) {
       this.setState({
         lastAvailI: indexNext,
@@ -82,6 +83,8 @@ class App extends React.Component {
     return maxRate;
   }
   handleDateClick(i) {
+    console.log('click: ', i);
+    console.log('checkin: ', this.state.checkInDate);
     var dateObj = new Date(i);
     if(this.state.checkInDate) {
       var checkInObj = new Date(this.state.checkInDate);
@@ -106,6 +109,7 @@ class App extends React.Component {
             lastAvailI: null,
             key: this.state.key -1,
           })
+          this.getLastAvailI(dateObj);
         }        
       }
     } else {

@@ -52,7 +52,7 @@ class Calendar extends React.Component {
         dayObjs: null
       },
       isLoaded: false,
-      windowWidth: 800,
+      windowWidth: 900,
     }
   }
   renderMonth(firstDay) {
@@ -74,6 +74,7 @@ class Calendar extends React.Component {
 
   componentDidMount() {
     var today = this.props.date;
+    console.log('cal props: ', this.props);
     // console.log('this props month: ', this.props.month);
     var firstDay = new Date(today.getFullYear(), this.props.month, 1);
     var firstDayI = Math.ceil((firstDay - new Date(today.getFullYear(), 0, 1))/(1000 * 3600 * 24));
