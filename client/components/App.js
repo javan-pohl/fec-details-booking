@@ -55,18 +55,18 @@ class App extends React.Component {
   }
   getLastAvailI(i) {
     var firstDateI = new Date(this.state.propData.calendar[0].date);
-    console.log(firstDateI);
+    // console.log(firstDateI);
     var checkInI = (i - firstDateI)/ (1000*60*60*24);
     var getNext = (element, i) => {
+      // console.log('getFirstAvail, i & checkInI: ', i, checkInI);
       return element.available === false && i > checkInI;
     }
     var indexNext = this.state.propData.calendar.findIndex(getNext, checkInI);
-    console.log('index next: ', indexNext);
-    if (indexNext > checkInI) {
-      this.setState({
-        lastAvailI: indexNext,
-      })
-    }
+    // console.log('index next: ', indexNext);
+    indexNext > checkInI ? indexNext : indexNext = null;
+    this.setState({
+      lastAvailI: indexNext,
+    })
   }
   getFirstAvail(date) {
     this.setState({
@@ -83,12 +83,9 @@ class App extends React.Component {
     return maxRate;
   }
   handleDateClick(i) {
-    console.log('click: ', i);
-    console.log('checkin: ', this.state.checkInDate);
     var dateObj = new Date(i);
     if(this.state.checkInDate) {
       var checkInObj = new Date(this.state.checkInDate);
-      console.log('hangleDateclick, checkinobj: ', checkInObj);
       if(this.state.checkOutDate) {
         this.setState({
           checkInDate: i,
@@ -138,7 +135,15 @@ class App extends React.Component {
   }
   renderBooking() {
     if (this.state.isLoaded) {
-      return <BookingModule cal={this.state.propData.calendar} maxRate={this.state.maxRate} reviewNum={this.state.propData.reviewNum} reviewRating={this.state.propData.reviewRating} />
+      return <BookingModule 
+        cal={this.state.propData.calendar} 
+        checkIn={this.state.checkInDate} 
+        checkOut={this.state.checkOutDate} 
+        maxGuests={this.state.propData.numGuest} 
+        maxRate={this.state.maxRate} 
+        reviewNum={this.state.propData.reviewNum} 
+        reviewRating={this.state.propData.reviewRating} 
+      />
     } else {
       return <div>Waiting on data to load...</div>
     }
@@ -146,7 +151,21 @@ class App extends React.Component {
 
   renderCalendar() {
     if (this.state.isLoaded) {
-      return <Calendar reviewRating={this.state.reviewRating} numReviews={this.state.numReviews} checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} date={this.state.currentDate} lastDateI={this.state.lastAvailI} month={this.state.displayMonth} minStay={this.state.propData.minStay} key={this.state.key} calendar={this.state.propData.calendar} onDateClick={(i) => this.handleDateClick(i)} onNextClick={() => this.handleNextMonthClick()} onPriorClick={() => this.handlePriorMonthClick()}/>
+      return <Calendar 
+        calendar={this.state.propData.calendar} 
+        checkIn={this.state.checkInDate} 
+        checkOut={this.state.checkOutDate} 
+        date={this.state.currentDate} 
+        lastDateI={this.state.lastAvailI} 
+        month={this.state.displayMonth} 
+        minStay={this.state.propData.minStay} 
+        numReviews={this.state.numReviews} 
+        reviewRating={this.state.reviewRating} 
+        key={this.state.key} 
+        onDateClick={(i) => this.handleDateClick(i)} 
+        onNextClick={() => this.handleNextMonthClick()} 
+        onPriorClick={() => this.handlePriorMonthClick()}
+      />
     } else {
       return <div>Waiting on data to load...</div>
     }
@@ -154,7 +173,11 @@ class App extends React.Component {
 
   renderDetails() {
     if (this.state.isLoaded) {
-      return <Details propId={this.state.propId} roomInfo={this.state.roomInfo}hostName={this.state.hostName}/>
+      return <Details 
+        propId={this.state.propId} 
+        roomInfo={this.state.roomInfo}
+        hostName={this.state.hostName}
+      />
     } else {
       return <div>Waiting on data to load...</div>
     }

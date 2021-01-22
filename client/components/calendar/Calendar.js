@@ -5,7 +5,7 @@ const CalendarTitle = (props) => {
   if (props.checkInDate) {
     return (
       <div className="calendar-heading">
-        <div className="caldenarTitle">
+        <div className="calendarTitle">
           Select Checkout Date
         </div>
         <div className="calendar-sub-heading">
@@ -16,7 +16,7 @@ const CalendarTitle = (props) => {
   } else {
     return (
       <div className="calendar-heading">
-        <div className="caldenar-title">
+        <div className="calendar-title">
           Select check-in date
         </div>
         <div className="calendar-sub-heading">
@@ -52,7 +52,7 @@ class Calendar extends React.Component {
         dayObjs: null
       },
       isLoaded: false,
-      windowWidth: 900,
+      windowWidth: 800,
     }
   }
   renderMonth(firstDay) {
@@ -74,28 +74,10 @@ class Calendar extends React.Component {
 
   componentDidMount() {
     var today = this.props.date;
-    console.log('cal props: ', this.props);
-    // console.log('this props month: ', this.props.month);
     var firstDay = new Date(today.getFullYear(), this.props.month, 1);
     var firstDayI = Math.ceil((firstDay - new Date(today.getFullYear(), 0, 1))/(1000 * 3600 * 24));
     var secM1stDay = new Date(today.getFullYear(), this.props.month + 1, 1);
     var secM1stDayI = Math.ceil((secM1stDay - new Date(today.getFullYear(), 0, 1))/(1000 * 3600 * 24));
-
-    // console.log('check-in: ', this.props.checkIn);
-    // console.log('check-out: ', this.props.checkOut);
-
-    // console.log('calendar did mount');
-    // console.log(today);
-    // console.log(firstDay);
-    // console.log(firstDayI);
-    // var testDate = this.props.calendar[0].date;
-    // console.log(testDate);
-    // var testDate2 = new Date(testDate);
-    // console.log('testDate2 ', testDate2);
-    // // var firstArray = new Date(this.props.calendar[0].date.getFullYear(), this.props.calendar[0].date.getMonth(), 1);
-    // // console.log(firstArray);
-    // console.log(secM1stDay);
-    // console.log(secM1stDayI);
 
     this.setState({
       currentMonth: this.props.month,

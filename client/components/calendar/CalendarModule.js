@@ -36,9 +36,6 @@ class CalendarModule extends React.Component {
     }
   }
   componentDidMount() {
-    // this.checkMinStay();
-    // console.log('calModule checkin date: ', this.props.checkIn);
-    console.log('calModul props: ', this.props);
     var firstDay = this.props.date;
     var firstWeekday = firstDay.getDay();
     var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth() + 1, 1);
@@ -50,10 +47,8 @@ class CalendarModule extends React.Component {
     
     var arrayDays = [];
     var startingDate = 1;
-    // console.log('this.props.cal: ', this.props.cal);
     for (var i = 0; i < numWeeks * 7; i++) {
       if (i >= firstWeekday && startingDate <= numDays) {
-        // arrayDays[i] = startingDate;
         arrayDays[i] = startingDate;
         startingDate++;
       } else {
@@ -66,7 +61,6 @@ class CalendarModule extends React.Component {
     var checkOutObj = new Date(this.props.checkOut);    
     var checkInStr = checkInObj.toString();
     var checkOutStr = checkOutObj.toString();
-    // put "last checkout-date" in state. the day after checkin but right before the first "unavailable" day. then we can do a quick check for all dates after that to exclude them from being the checkout date (and not put the onclick function there)
 
     var calDays = arrayDays.map((val, i) => { 
       var dateValue = null;
@@ -75,18 +69,12 @@ class CalendarModule extends React.Component {
         dateValue = `${month + 1}/${val}/${year}`;
         var dateValObj = new Date(dateValue);
         var dateValStr = dateValObj.toString();
-        // console.log('ondateclick: ', this.props);
-        // console.log('dateI: ', dateI);
-        // console.log('dateValObj: ', dateValObj);
-        // console.log('thispropstoday: ', this.props.today);
-        // console.log(dateI);
-        // console.log('calmod line 78: ', this.props.cal[dateI]);
         if (dateValObj >= this.props.today && this.props.cal[dateI].available) {
-          divClass = 'cal-days-inner cal-day-available';
-          buttonClass = 'cal-days cal-days-available';
+          divClass = 'cal-days-inner cal-day-available-not';
+          buttonClass = 'cal-days cal-days-available-not';
           if (!this.props.checkIn && this.checkMinStay(dateI) || this.props.checkOut && this.checkMinStay(dateI)) {
-            //then add click function in here
-            console.log('calMod2', dateValObj);
+            divClass = 'cal-days-inner cal-day-available';
+            buttonClass = 'cal-days cal-days-available';
             clickFunction = () => this.props.onDateClick(dateValue);
           } 
         } else {
@@ -101,32 +89,25 @@ class CalendarModule extends React.Component {
             buttonClass += ' stay-day';
           }
           if (dateValStr === checkOutStr) {
-            // console.log('adding check-out-date class');
             buttonClass += ' check-out-date';
           }
         } else {
           if (dateValStr === checkInStr) {
-            // console.log('adding check-in-date class');
             buttonClass += ' check-in-date';
           } 
-          // console.log('calmod line 106: ', this.props.cal[dateI]);
-          console.log('testing: ', dateValObj, this.props.lastDateI);
-          if (this.props.checkIn && (((dateValObj - checkInObj) / (1000*60*60*24)) >= this.props.minStay) && this.props.cal[dateI].available && dateI < this.props.lastDateI) {
-            console.log('calMod3', dateValObj);
-            clickFunction = () => this.props.onDateClick(dateValue);
+          if (this.props.checkIn && (((dateValObj - checkInObj) / (1000*60*60*24)) >= this.props.minStay) && this.props.cal[dateI].available) {
+            if (this.props.lastDateI === null || (this.props.lastDateI !== null && (dateI < this.props.lastDateI))) {
+              divClass = 'cal-days-inner cal-day-available';
+              buttonClass = 'cal-days cal-days-available';
+              clickFunction = () => this.props.onDateClick(dateValue);
+            }  
           } 
           if (this.props.checkIn && dateValObj < checkInObj) {
-            console.log('calMod4', dateValObj);
+            divClass = 'cal-days-inner cal-day-available';
+            buttonClass = 'cal-days cal-days-available';
             clickFunction = () => this.props.onDateClick(dateValue);
           }
         }
-        // if (dateI > this.props.lastDateI) {
-        //   clickFunction = null;
-        // }
-        // if(this.props.lastDateI && dateI > this.props.lastDateI) {
-        //   clickFunction = null;
-        // }
-        // clickFunction = () => this.props.onDateClick(dateValue);
         dateI++;
         return (
           <button className={buttonClass} id={dateValue} key={i} onClick={clickFunction}><div className={divClass} key={i}>{val}</div></button>
@@ -139,19 +120,14 @@ class CalendarModule extends React.Component {
     this.setDMY(calDays, month, year);
   }
   checkMinStay(dateIndex) {
-    // take in the (proposed check-in... or check-out) date and return true or false depending on if the date is at least the min-stay length away from the next unavailable day (or, in the case of check-out, the distance from the check-in)
-    // maybe also trigger a state "check-in-warning" value?
-    if (this.props.lastDateI && (dateIndex > this.props.lastDateI)) {
+    if (!this.props.checkOut && (this.props.lastDateI && (dateIndex > this.props.lastDateI))) {
       return false;
     }
-    // this.props.lastDateI
     if (!this.props.checkIn || (this.props.checkIn && this.props.checkOut)) {
-      // console.log('calmod 136: ');
       var getNext = (element, i) => {
         return element.available === false && i > dateIndex;
       }
       var indexNext = this.props.cal.findIndex(getNext, dateIndex);
-      // console.log('checkMinStay. CurrentIndex & IndexNextUnavailable: ', dateIndex, indexNext, indexNext - dateIndex);
       if (indexNext === -1 || indexNext < dateIndex) {
         // console.log('dateIndex: ', indexNext, dateIndex);
         // console.log('indexNext === -1, TRUE');
@@ -168,8 +144,6 @@ class CalendarModule extends React.Component {
         return false;
       }
     }
-    console.log('checkMinstay1');
-    console.log(dateIndex, this.props.lastDateI);
   }
   setDMY(days, monthNum, yearNum) {
     var monthArr = ['January','February','March','April','May','June','July',
@@ -203,15 +177,4 @@ class CalendarModule extends React.Component {
 }
 
 export default CalendarModule;
-
-// class CalendarModule extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//     return (
-//       <Month date={this.props.date}/>
-//     )
-//   }
-// }
 
