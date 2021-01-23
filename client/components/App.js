@@ -25,6 +25,7 @@ class App extends React.Component {
       currentMonth: null,
       displayMonth: null,
       maxRate: null,
+      taxRate: null,
       key: 0,
     }
   }
@@ -35,18 +36,21 @@ class App extends React.Component {
       .then(
         (results) => {
           console.log(results);
+          var propId = 0;
+          var data = results[propId];
           this.setState({
-            propData: results[0],
+            propData: data,
             roomInfo: {
-              numGuest: results[0].numGuest,
-              numBedRooms: results[0].numBedRooms,
-              numBeds: results[0].numBeds,
-              numBaths: results[0].numBathRooms
+              numGuest: data.numGuest,
+              numBedRooms: data.numBedRooms,
+              numBeds: data.numBeds,
+              numBaths: data.numBathRooms
             },
-            hostName: results[0].hostName.firstName,
+            hostName: data.hostName.firstName,
             currentMonth: this.state.currentDate.getMonth(),
             displayMonth: this.state.currentDate.getMonth(),
-            maxRate: this.getMaxRate(results[0].calendar),
+            maxRate: this.getMaxRate(data.calendar),
+            taxRate: data.StateTaxRate + data.cityTaxRate + data.countyTaxRate,
             isLoaded: true
           })
         }
@@ -143,6 +147,7 @@ class App extends React.Component {
         maxRate={this.state.maxRate} 
         reviewNum={this.state.propData.reviewNum} 
         reviewRating={this.state.propData.reviewRating} 
+        tax={this.state.taxRate}
       />
     } else {
       return <div>Waiting on data to load...</div>
