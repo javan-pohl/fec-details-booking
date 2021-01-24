@@ -23,6 +23,9 @@ const BookingUpper = (props) => {
         </div>        
       </div>
       <div className="booking-reviews"> 
+        <div className="booking-reviews-star">
+          <img src="../img/star.png" height="11"></img>
+        </div>
         <div className="booking-reviews-rating">
           {props.reviewRating}
         </div>
@@ -36,7 +39,7 @@ const BookingUpper = (props) => {
 
 const CheckIn = (props) => {
   var numGuests = props.Adults + props.Children;
-  console.log('check in, props: ', props);
+  // console.log('check in, props: ', props);
   var guestText, displayForm;
   numGuests > 1 ? guestText = ' guests' : guestText = ' guest';
   const FormMainRow = function(category, desc) {
@@ -129,7 +132,7 @@ const CheckIn = (props) => {
 
 const RenderButton = (props) => {
   var text;
-  console.log('render button: ', props);
+  // console.log('render button: ', props);
   props.checkOut ? text = 'Reserve' : text = 'Check Availability';
   return (
     <div className="check-button">
@@ -218,7 +221,11 @@ class BookingModule extends React.Component {
     var numNights = this.calcStayLength();
     var checkInObj = new Date(this.props.checkIn);
     var firstDayObj = new Date(checkInObj.getFullYear(), 0, 1);
-    var checkInI = (checkInObj - firstDayObj) / (1000*60*60*24);
+    var checkInI = Math.ceil((checkInObj - firstDayObj) / (1000*60*60*24));
+    // console.log('numNights', numNights);
+    // console.log('checkInObj', checkInObj);
+    // console.log('firstDayObj', firstDayObj);
+    // console.log('checkInI', checkInI);
 
     var avg = 0;
     var tax = 0;
@@ -249,7 +256,7 @@ class BookingModule extends React.Component {
   calcStayLength() {
     // console.log('calcStayLength...');
     if (this.props.checkOut) {
-      var numNights = (new Date(this.props.checkOut) - new Date(this.props.checkIn)) / (1000*60*60*24);
+      var numNights = Math.ceil((new Date(this.props.checkOut) - new Date(this.props.checkIn)) / (1000*60*60*24));
       return numNights
     } 
     return null
@@ -257,7 +264,7 @@ class BookingModule extends React.Component {
 
   renderCharges() {
     const renderLine = (str, amt, isDisc, last) => {
-      console.log('renderLine: ', str, amt, isDisc, last);
+      // console.log('renderLine: ', str, amt, isDisc, last);
       var amtClass = 'guest-form-price-line-right float-right ';
       var lineClass = 'guest-form-price-line padding-10-t margin-15-b ';
       var negDisc;
@@ -280,7 +287,7 @@ class BookingModule extends React.Component {
       )
     }
     if (this.state.avgRate) {
-      console.log('discount perc: ', this.state.discountPerc);
+      // console.log('discount perc: ', this.state.discountPerc);
       var numNightsStr = `$${this.props.maxRate} x ${this.state.stayLength} nights`;
       var discStr = `${Math.ceil(this.state.discountPerc * 100)}% weekly price discount`;
       // console.log('renderCharges: ', this.state);
@@ -309,7 +316,7 @@ class BookingModule extends React.Component {
     }
   }
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return(
       <div className="booking">
         <div className="booking-module">

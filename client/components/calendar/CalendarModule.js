@@ -102,7 +102,9 @@ class CalendarModule extends React.Component {
               clickFunction = () => this.props.onDateClick(dateValue);
             }  
           } 
-          if (this.props.checkIn && dateValObj < checkInObj) {
+          // console.log('test...', dateValObj);
+          if (this.props.checkIn && dateValObj < checkInObj && dateValObj >= this.props.today && this.checkMinStay(dateI)) {
+            // console.log('test 4');
             divClass = 'cal-days-inner cal-day-available';
             buttonClass = 'cal-days cal-days-available';
             clickFunction = () => this.props.onDateClick(dateValue);

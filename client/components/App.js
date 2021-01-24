@@ -1,5 +1,6 @@
 import React from 'react';
 import Details from './details/Details.js';
+import Highlights from './highlights/Highlights.js';
 import BookingModule from './booking/BookingModule.js';
 import Calendar from './calendar/Calendar.js';
 
@@ -86,6 +87,15 @@ class App extends React.Component {
     })
     return maxRate;
   }
+  handleClearDates() {
+    console.log('clearDates() clicked', this.state);
+    this.setState({
+      checkInDate: null,
+      checkOutDate: null,
+      lastAvailI: null,
+      key: this.state.key + 1,
+    })
+  }
   handleDateClick(i) {
     var dateObj = new Date(i);
     if(this.state.checkInDate) {
@@ -139,16 +149,18 @@ class App extends React.Component {
   }
   renderBooking() {
     if (this.state.isLoaded) {
-      return <BookingModule 
-        cal={this.state.propData.calendar} 
-        checkIn={this.state.checkInDate} 
-        checkOut={this.state.checkOutDate} 
-        maxGuests={this.state.propData.numGuest} 
-        maxRate={this.state.maxRate} 
-        reviewNum={this.state.propData.reviewNum} 
-        reviewRating={this.state.propData.reviewRating} 
-        tax={this.state.taxRate}
-      />
+      return (
+        <BookingModule 
+          cal={this.state.propData.calendar} 
+          checkIn={this.state.checkInDate} 
+          checkOut={this.state.checkOutDate} 
+          maxGuests={this.state.propData.numGuest} 
+          maxRate={this.state.maxRate} 
+          reviewNum={this.state.propData.reviewNum} 
+          reviewRating={this.state.propData.reviewRating} 
+          tax={this.state.taxRate}
+        />
+      )
     } else {
       return <div>Waiting on data to load...</div>
     }
@@ -156,26 +168,28 @@ class App extends React.Component {
 
   renderCalendar() {
     if (this.state.isLoaded) {
-      return <Calendar 
-        calendar={this.state.propData.calendar} 
-        checkIn={this.state.checkInDate} 
-        checkOut={this.state.checkOutDate} 
-        date={this.state.currentDate} 
-        lastDateI={this.state.lastAvailI} 
-        month={this.state.displayMonth} 
-        minStay={this.state.propData.minStay} 
-        numReviews={this.state.numReviews} 
-        reviewRating={this.state.reviewRating} 
-        key={this.state.key} 
-        onDateClick={(i) => this.handleDateClick(i)} 
-        onNextClick={() => this.handleNextMonthClick()} 
-        onPriorClick={() => this.handlePriorMonthClick()}
-      />
+      return ( 
+        <Calendar 
+          calendar={this.state.propData.calendar} 
+          checkIn={this.state.checkInDate} 
+          checkOut={this.state.checkOutDate} 
+          date={this.state.currentDate} 
+          lastDateI={this.state.lastAvailI} 
+          month={this.state.displayMonth} 
+          minStay={this.state.propData.minStay} 
+          numReviews={this.state.numReviews} 
+          reviewRating={this.state.reviewRating} 
+          key={this.state.key} 
+          onClearDates={this.handleClearDates.bind(this)}
+          onDateClick={(i) => this.handleDateClick(i)} 
+          onNextClick={() => this.handleNextMonthClick()} 
+          onPriorClick={() => this.handlePriorMonthClick()}
+        />
+      )
     } else {
       return <div>Waiting on data to load...</div>
     }
   }
-
   renderDetails() {
     if (this.state.isLoaded) {
       return <Details 
@@ -187,11 +201,37 @@ class App extends React.Component {
       return <div>Waiting on data to load...</div>
     }
   }
+  renderHighlights() {
+    if (this.state.isLoaded) {
+      return (
+        // <div></div>
+        <Highlights
+          cancelDays={this.state.propData.freeCancelDays}
+          cancelTime={this.state.propData.freeCancelTime}
+          checkIn={this.state.checkInDate}
+          enhancedClean={this.state.propData.enhancedClean}
+          hostName={this.state.hostName}
+          lockBox={this.state.propData.lockBox}
+          selfCheckIn={this.state.propData.selfCheckIn}
+          shared={this.state.propData.shared}
+          superHost={this.state.propData.superHost}
+          kids={this.state.propData.kids}
+          houseType={this.state.propData.houseType}
+          parties={this.state.propData.parties}
+          pets={this.state.propData.pets}
+          smoking={this.state.propData.smoking}
+        />
+      )
+    } else {
+      return <div>Waiting on data to load...</div>
+    }
+  }
   render() {
     return(
       <div className="outer">
         <div className="details">
           {this.renderDetails()}
+          {this.renderHighlights()}
           {this.renderCalendar()}
         </div>
         {this.renderBooking()}

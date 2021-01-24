@@ -18,6 +18,9 @@ var genProp = function() {
   // names.getName(propId) to get name;
   var name = names.getName(id);
 
+  var houseType = ['apartment', 'house', 'townhome', 'flat'];
+  const getHouseType = () => houseType[randomNum(0,3)];
+
   var randomBoolean = function() {
     return Math.random() > .5 ? true : false;
   };
@@ -68,19 +71,24 @@ var genProp = function() {
   var propObj = {
     propId: id,
     hostName: name,
+    houseType: getHouseType(),
     numGuest: guestNum,
     numBedRooms: numBedRooms,
     numBeds: bedNum,
     numBathRooms: numBathRooms,
     beds: beds,
-    kids: randomBoolean(),
-    pets: randomBoolean(),
-    parties: randomBoolean(),
-    smoking: randomBoolean(),
-    shared: randomBoolean(),
     enhancedClean: randomBoolean(),
+    shared: randomBoolean(),
+    superHost: randomBoolean(),
     selfCheckIn: randomBoolean(),
     lockBox: randomBoolean(),
+    superHost: randomBoolean(),
+    kids: randomBoolean(),
+    parties: randomBoolean(),
+    pets: randomBoolean(),
+    smoking: randomBoolean(),
+    freeCancelDays: randomNum(2,7),
+    freeCancelTime: randomNum(2,7),
     // freeCancelHours: Number,
     // discCancelDays: Number,
     // fullRefundDays: Number,
@@ -90,8 +98,8 @@ var genProp = function() {
     amenities: amens.getAmens,
     calendar: cal,
     minStay: minStay,
-    reviewRating: randomNum2(1 , 4.9),
-    reviewNum: randomNum(4, 300),
+    reviewRating: randomNum2(3 , 4.9),
+    reviewNum: randomNum(5, 300),
     cityTaxRate: randomNum3(.005, .025),
     countyTaxRate: randomNum3(.005, .025),
     StateTaxRate: randomNum3(.005, .025)

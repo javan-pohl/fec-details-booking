@@ -11,10 +11,6 @@ const livereload = require('livereload');
 const morgan = require('morgan');
 const parser = require('body-parser');
 
-//router
-// const router = require('./routes.js');
-// const mongoRouter = require('./mongoRoutes.js');
-
 const PORT = 3000;
 
 const app = express();
@@ -23,11 +19,6 @@ const app = express();
 app.use(morgan('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({extended: true}));
-// auto refresh of webpage
-
-// set-up routes
-// app.use('/api', router);
-// app.use('/api', mongoRouter);
 
 const liveReloadServer = livereload.createServer();
 
