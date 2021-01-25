@@ -27,7 +27,7 @@ const genProp = function () {
   };
   const randomNum2 = function (min, max) {
     // No rounding down of returned value
-    return Math.random() * (max * 0.999 - min + 1) + min;
+    return Math.random() * (max * 0.999 - min) + min;
   };
   const randomNum3 = function (min, max) {
     // allows for max values less than 1
