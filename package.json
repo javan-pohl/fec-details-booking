@@ -26,6 +26,7 @@
     "fuser": "^2.0.0",
     "jquery": "^3.5.1",
     "livereload": "^0.9.1",
+    "lodash": "^4.17.20",
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.6",
     "morgan": "1.9.1",

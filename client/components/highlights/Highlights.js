@@ -75,18 +75,20 @@ function Highlights(props) {
     parties: props.parties,
   }
   console.log('houseRulesArr', houseRulesArr);
-  var houseRulesStr = _.reduce(houseRulesArr, (memo, val, key, list) => {
+  var houseRulesStr = '' + _.reduce(houseRulesArr, (memo, val, key, list) => {
     if (!val) {
       console.log('houserules: ', memo, key, list);
       return memo + key + ', '
+    } else {
+      return memo
     }
   }, '');
   console.log('houserulesstr: ', houseRulesStr);
-  houseRulesStr = houseRulesStr.length > 0 ? houseRulesStr + 'or dinosaurs.' : 'dinosaurs.';
+  var houseRulesStr2 = houseRulesStr.length > 0 ? houseRulesStr + 'or dinosaurs.' : 'dinosaurs.';
   var houseRules = {
     name: 'house rules',
     header: `House rules`,
-    desc: `This place ${props.kids ? 'is' : 'isn\'t'} suitable for children under 12 and the host doesn't allow ${houseRulesStr}`,
+    desc: `This place ${props.kids ? 'is' : 'isn\'t'} suitable for children under 12 and the host doesn't allow ${houseRulesStr2}`,
     icon: '../img/highlights/houseRules.png'
   }
   var highlightProps = {
