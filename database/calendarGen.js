@@ -1,86 +1,81 @@
-
-
-// let [month, date, year] = new Date().toLocaleDateString("en-US").split("/");
-
-var getCal = () => {
-  Date.prototype.addDays = function(days) {
-    var dat = new Date(this.valueOf())
+const getCal = () => {
+  // eslint-disable-next-line no-extend-native
+  Date.prototype.addDays = function (days) {
+    const dat = new Date(this.valueOf());
     dat.setDate(dat.getDate() + days);
     return dat;
-  }
+  };
 
   function getDates(startDate, stopDate) {
-  var dateArray = new Array();
-  var currentDate = startDate;
-  while (currentDate <= stopDate) {
-    dateArray.push(currentDate)
-    currentDate = currentDate.addDays(1);
-  }
-  return dateArray;
+    const dateArray = [];
+    let currentDate = startDate;
+    while (currentDate <= stopDate) {
+      dateArray.push(currentDate);
+      currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
   }
 
-  var random = function(min, max) {
+  const random = function (min, max) {
     // 'max' to be the highest value you want selected
-    return Math.floor(Math.random() * (max * .999 - min + 1) + min)
-  }
+    return Math.floor(Math.random() * (max * 0.999 - min + 1) + min);
+  };
 
   // set a random baseRate from 100 - 200 dollars
-  var getBaseRate = () => random(10, 20) * 10 ;
-  var baseRate = getBaseRate();
+  const getBaseRate = () => random(10, 20) * 10;
+  const baseRate = getBaseRate();
 
   // set up a way to randomize the discount rate (which will be done on a weekly basis)
-  var discounts = [0, .1, .15, .2];
-  var getRandomDisc = () => discounts[random(0 , 3)];
+  const discounts = [0, 0.1, 0.15, 0.2];
 
-  var round5 = (x) => Math.ceil(x/5) * 5;
+  const getRandomDisc = () => discounts[random(0, 3)];
+  const round5 = (x) => Math.ceil(x / 5) * 5;
 
-  var getMinStay = [2, 2, 2, 3, 3, 3, 3, 3, 7, 7, 14];
-  var minStay = getMinStay[random(0, getMinStay.length - 1)];
+  const getMinStay = [2, 2, 2, 3, 3, 3, 3, 3, 7, 7, 14];
+  const minStay = getMinStay[random(0, getMinStay.length - 1)];
 
-  var dateArray = getDates(new Date(), (new Date()).addDays(180));
-  // first let's map an obj for each one out
-  dateArray = dateArray.map((val) => {
-    return {date: val}
-  })
+  let dateArray = getDates(new Date('01/01/2021'), (new Date()).addDays(210));
+  dateArray = dateArray.map((val) => ({ date: val }));
 
-  var addDateInfo = function(objArr) {
-    var weekNum = 1;
-    var weeklyDisc = getRandomDisc();
-    objArr.forEach((val, i) => {
+  const addDateInfo = function (objArr) {
+    let weeklyDisc = getRandomDisc();
+    const newObjArr = objArr.map((val, i) => {
+      const newVal = val;
       if (i > 0) {
-        if (val.date.getDay() === 0) {
-          weekNum++;
+        if (newVal.date.getDay() === 0) {
           weeklyDisc = getRandomDisc();
         }
       }
-      val.date.getDay() >= 5 ? val.rate = round5(baseRate * 1.25) : val.rate = baseRate;
-      val.discPerc = weeklyDisc;
-      val.available = true;
-      val.minStay = minStay;
+      if (newVal.date.getDay() >= 5) {
+        newVal.rate = round5(baseRate * 1.25);
+      } else {
+        newVal.rate = baseRate;
+      }
+      newVal.discPerc = weeklyDisc;
+      newVal.available = true;
+      newVal.minStay = minStay;
+      return newVal;
     });
-    return objArr;
-  }
+    return newObjArr;
+  };
 
   dateArray = addDateInfo(dateArray);
 
-  var addRandomBlocks = function(calObj) {
-    var firstDay = 1;
-    var lastDate = 7;
-    var startDate = random(firstDay, lastDate);
-    var numOfDays = minStay;
-    for (var i = startDate; i < (startDate + numOfDays); i++) {
-      // console.log('i: ', i);
-      // console.log(calObj[i]);
-      calObj[i].available = false;
-      // console.log(calObj[i]);
+  const addRandomBlocks = function (calObj) {
+    const newCalObj = calObj;
+    const firstDay = 32;
+    const lastDate = 64;
+    const startDate = random(firstDay, lastDate);
+    const numOfDays = minStay * 2;
+    for (let i = startDate; i < (startDate + numOfDays); i += 1) {
+      newCalObj[i].available = false;
     }
-    return calObj;
-  }
+    return newCalObj;
+  };
   dateArray = addRandomBlocks(dateArray);
   return dateArray;
-}
-
-// console.log(dateArray);
-
+};
+const dateArray = getCal();
+console.log(dateArray);
 
 module.exports.getCal = getCal;
