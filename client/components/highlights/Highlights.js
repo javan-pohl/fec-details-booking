@@ -24,9 +24,6 @@ function Highlights(props) {
     halfCancelMonth = monthArr[halfCancelDate.getMonth()];
     halfCancelDay = halfCancelDate.getDate();
   }
-  const getCancellation = () => {
-
-  }
   var sharedFalse =  {
     name: 'shared',
     value: false,
@@ -62,7 +59,7 @@ function Highlights(props) {
   var cancellation = {
     name: 'cancellation',
     header: today >= halfCancelDate ? `Too late to cancel` : `Free cancellation until ${props.cancelTime}:00 PM on ${cancelMonth} ${cancelDay}`,
-    desc: today >= halfCancelDate ? `It is too close to your desired check-in date to cancel. After booking, this reservation would be non-cancellable` : `After that, cancel before ${props.cancelTime}:00 PM on ${halfCancelMonth} ${halfCancelDay} and get a 50% refund, minus the first night and service fee.`,
+    desc: today >= halfCancelDate ? `It is too close to your desired check-in date to cancel. After booking, this reservation would be non-refundable` : `After that, cancel before ${props.cancelTime}:00 PM on ${halfCancelMonth} ${halfCancelDay} and get a 50% refund, minus the first night and service fee.`,
     icon: '../img/highlights/cancellation.png'
   }
   var cancellationFalse = {
@@ -77,14 +74,13 @@ function Highlights(props) {
     smoking: props.smoking,
     parties: props.parties,
   }
-  var count = 0;
   var houseRulesStr = _.reduce(houseRulesArr, (memo, val, key, list) => {
     if (!val) {
       console.log('houserules: ', memo, key, list);
       return memo + key + ', '
     }
   }, '');
-  houseRulesStr = houseRulesStr.length > 0 ? houseRulesStr + ' or dinosaurs.' : ' dinosaurs.';
+  houseRulesStr = houseRulesStr.length > 0 ? houseRulesStr + 'or dinosaurs.' : 'dinosaurs.';
   var houseRules = {
     name: 'house rules',
     header: `House rules`,
