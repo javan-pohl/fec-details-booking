@@ -74,12 +74,14 @@ function Highlights(props) {
     smoking: props.smoking,
     parties: props.parties,
   }
+  console.log('houseRulesArr', houseRulesArr);
   var houseRulesStr = _.reduce(houseRulesArr, (memo, val, key, list) => {
     if (!val) {
       console.log('houserules: ', memo, key, list);
       return memo + key + ', '
     }
   }, '');
+  console.log('houserulesstr: ', houseRulesStr);
   houseRulesStr = houseRulesStr.length > 0 ? houseRulesStr + 'or dinosaurs.' : 'dinosaurs.';
   var houseRules = {
     name: 'house rules',
