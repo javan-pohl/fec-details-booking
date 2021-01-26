@@ -1,8 +1,8 @@
 const path = require('path');
 
 const SRC_DIR = path.join(__dirname, 'client', 'components');
-// const OUT_DIR = path.join(__dirname, 'public');
-const OUT_DIR = path.join(__dirname, 'proxy');
+const OUT_DIR = path.join(__dirname, 'public');
+// const OUT_DIR = path.join(__dirname, 'proxy');
 
 
 module.exports = {
