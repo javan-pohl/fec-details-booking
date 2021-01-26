@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack",
     "kill": "kill -9 $(lsof -i :3000) &>/dev/null | exit 0",
+    "proxy": "nodemon --signal SIGTERM proxy/index.js",
     "seed": "node ./database/propGen.js",
     "start": "nodemon --signal SIGTERM server/index.js",
     "start:db": "mongod",
@@ -24,6 +25,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fuser": "^2.0.0",
+    "http-proxy-middleware": "^1.0.6",
     "jquery": "^3.5.1",
     "livereload": "^0.9.1",
     "lodash": "^4.17.20",
@@ -31,6 +33,7 @@
     "mongoose": "^4.11.6",
     "morgan": "1.9.1",
     "mysql": "^2.18.1",
+    "prop-types": "^15.7.2",
     "pstree.remy": "^1.1.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

@@ -123,8 +123,8 @@ class Calendar extends React.Component {
             <div className="calendar-module">
               <CalendarModule 
                 date={this.state.firstMonth.firstDay} 
-                checkIn={this.props.checkIn} c
-                heckOut={this.props.checkOut} 
+                checkIn={this.props.checkIn} 
+                checkOut={this.props.checkOut} 
                 dateIndex={this.state.firstMonth.dateIndex} 
                 lastDateI={this.props.lastDateI} 
                 today={this.props.date} 

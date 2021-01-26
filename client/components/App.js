@@ -3,6 +3,7 @@ import Details from './details/Details.js';
 import Highlights from './highlights/Highlights.js';
 import BookingModule from './booking/BookingModule.js';
 import Calendar from './calendar/Calendar.js';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor(props) {
@@ -98,6 +99,7 @@ class App extends React.Component {
   }
   handleDateClick(i) {
     var dateObj = new Date(i);
+    console.log('handleDateClick, i: ', i, dateObj);
     if(this.state.checkInDate) {
       var checkInObj = new Date(this.state.checkInDate);
       if(this.state.checkOutDate) {
@@ -238,7 +240,8 @@ class App extends React.Component {
       </div>
     )
   }
-}
+};
+
 
 
 

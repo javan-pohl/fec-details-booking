@@ -42,7 +42,7 @@ function Highlights(props) {
     name: 'enhancedClean',
     header: `Enhanced Clean`,
     desc: `The host committed to Airbnb's 5-step enhanced cleaning proces.`,
-    icon: '../img/highlights/clean.png'
+    icon: '../img/highlights/enhancedClean.png'
   };
   var superHost = { 
     name: 'superHost',
