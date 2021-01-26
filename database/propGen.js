@@ -5,81 +5,83 @@ const calendar = require('./calendarGen.js');
 const descriptions = require('./textGen');
 const names = require('./namesGen.js');
 
-var ids = [];
+const ids = [];
 
-var genProp = function() {
-  var getPropId = function() {
-    var propId = ids[ids.length - 1] + 1 || 1;
+const genProp = function () {
+  const getPropId = function () {
+    const propId = ids[ids.length - 1] + 1 || 1;
     ids.push(propId);
     return propId;
   };
 
-  var id = getPropId();
+  const id = getPropId();
   // names.getName(propId) to get name;
-  var name = names.getName(id);
+  const name = names.getName(id);
 
-  var houseType = ['apartment', 'house', 'townhome', 'flat'];
-  const getHouseType = () => houseType[randomNum(0,3)];
-
-  var randomBoolean = function() {
-    return Math.random() > .5 ? true : false;
+  const randomBoolean = function () {
+    return Math.random() > 0.5;
+  };
+  const randomNum = function (min, max) {
+    // 'max' to be the highest value you want selected
+    return Math.floor(Math.random() * (max * 0.999 - min + 1) + min);
+  };
+  const randomNum2 = function (min, max) {
+    // No rounding down of returned value
+    return Math.random() * (max * 0.999 - min) + min;
+  };
+  const randomNum3 = function (min, max) {
+    // allows for max values less than 1
+    return Math.random() * (max - min) + min;
   };
 
-  var randomNum = function(min, max) {
-    // 'max' to be the highest value you want selected
-    return Math.floor(Math.random() * (max * .999 - min + 1) + min)
-  }
-  var randomNum2 = function(min, max) {
-    // No rounding down of returned value
-    return Math.random() * (max * .999 - min + 1) + min
-  }
-  var randomNum3 = function(min, max) {
-    // allows for max values less than 1
-    return Math.random() * (max - min) + min
-  }
-  var getGuestNum = () => randomNum(25, 8);
+  const houseType = ['apartment', 'house', 'townhome', 'flat'];
+  const getHouseType = () => houseType[randomNum(0, 3)];
+
+  const getGuestNum = () => randomNum(25, 8);
   const guestNum = getGuestNum();
 
-  const numBedRooms = Math.floor(guestNum/4);
-  var numBathRooms = Math.floor(numBedRooms * randomNum2(.7, 1.5));
+  const numBedRooms = Math.floor(guestNum / 4);
+  const numBathRooms = Math.floor(numBedRooms * randomNum2(0.7, 1.5));
 
-  var getBeds = (num) => {
-    switch(num) {
+  // eslint-disable-next-line consistent-return
+  const getBeds = function (num) {
+    switch (num) {
       case 1:
-        return {bedType: 'King', num: 1}
-      case 2: 
-        return {bedType: 'Queen', num: randomNum(1, 2)}
-      case 3: 
-        return {bedType: 'Double', num: randomNum(1, 3)}
+        return { bedType: 'King', num: 1 };
+      case 2:
+        return { bedType: 'Queen', num: randomNum(1, 2) };
+      case 3:
+        return { bedType: 'Double', num: randomNum(1, 3) };
+      default:
     }
   };
-  var beds = [];
-  for (var i = 0; i < numBedRooms; i++) {
-    beds[i] = getBeds(randomNum(1,3));
+
+  const beds = [];
+  for (let i = 0; i < numBedRooms; i += 1) {
+    beds[i] = getBeds(randomNum(1, 3));
   }
 
-  var numBeds = () => beds.reduce((total, val) => total + val.num, 0);
-  var bedNum = numBeds();
+  const numBeds = () => beds.reduce((total, val) => total + val.num, 0);
+  const bedNum = numBeds();
 
-  var getEmail = () => {
-    var emails = ['hotmail', 'gmail', 'yahoo', 'netscape'];
-    return name.firstName + name.lastName + '@' + emails[randomNum(0, 3)] + '.com';
-  }
-  var cal = calendar.getCal();
-  var minStay = cal[0].minStay;
+  const getEmail = () => {
+    const emails = ['hotmail', 'gmail', 'yahoo', 'netscape'];
+    return `${name.firstName + name.lastName}@${emails[randomNum(0, 3)]}.com`;
+  };
+  const cal = calendar.getCal();
+  const { minStay } = cal[0];
 
-  var propObj = {
+  const propObj = {
     propId: id,
     hostName: name,
     houseType: getHouseType(),
     numGuest: guestNum,
-    numBedRooms: numBedRooms,
+    numBedRooms,
     numBeds: bedNum,
-    numBathRooms: numBathRooms,
-    beds: beds,
+    numBathRooms,
+    beds,
     enhancedClean: randomBoolean(),
     shared: randomBoolean(),
-    superHost: randomBoolean(),
     selfCheckIn: randomBoolean(),
     lockBox: randomBoolean(),
     superHost: randomBoolean(),
@@ -87,8 +89,8 @@ var genProp = function() {
     parties: randomBoolean(),
     pets: randomBoolean(),
     smoking: randomBoolean(),
-    freeCancelDays: randomNum(2,7),
-    freeCancelTime: randomNum(2,7),
+    freeCancelDays: randomNum(2, 7),
+    freeCancelTime: randomNum(2, 7),
     // freeCancelHours: Number,
     // discCancelDays: Number,
     // fullRefundDays: Number,
@@ -97,22 +99,22 @@ var genProp = function() {
     hostEmail: getEmail(),
     amenities: amens.getAmens,
     calendar: cal,
-    minStay: minStay,
-    reviewRating: randomNum2(3 , 4.9),
+    minStay,
+    reviewRating: randomNum2(3, 4.9),
     reviewNum: randomNum(5, 300),
-    cityTaxRate: randomNum3(.005, .025),
-    countyTaxRate: randomNum3(.005, .025),
-    StateTaxRate: randomNum3(.005, .025)
-  }
+    cityTaxRate: randomNum3(0.005, 0.025),
+    countyTaxRate: randomNum3(0.005, 0.025),
+    StateTaxRate: randomNum3(0.005, 0.025),
+  };
   return propObj;
-}
+};
 
-var sample = [];
-for (var i = 0; i < 100; i++) {
+const sample = [];
+for (let i = 0; i < 100; i += 1) {
   sample[i] = genProp();
 }
 
-const insertSampleProps = function() {
+const insertSampleProps = function () {
   Prop.create(sample)
     .then(() => {
       console.log('sample data save success!');
@@ -121,7 +123,7 @@ const insertSampleProps = function() {
     .catch((err) => {
       console.log('error: ', err);
       db.close();
-    })
+    });
 };
 
 insertSampleProps();
