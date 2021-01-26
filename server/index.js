@@ -21,7 +21,6 @@ const db = require('../database/getProps.js');
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/api/props/:propId', cors(), (req, res) => {
-  console.log('in index.js get request');
   db.getById(req, res);
 });
 
