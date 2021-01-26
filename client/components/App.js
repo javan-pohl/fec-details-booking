@@ -3,7 +3,6 @@ import Details from './details/Details.js';
 import Highlights from './highlights/Highlights.js';
 import BookingModule from './booking/BookingModule.js';
 import Calendar from './calendar/Calendar.js';
-import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +32,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/props/1')
+    fetch('http://localhost:3004/api/props/56')
       .then( res => res.json())
       .then(
         (results) => {
