@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BookingUpper = (props) => {
-  const { reviewRating, reviewNum, avgRate } = props;
+  const {
+    reviewRating, reviewNum, avgRate, maxRate,
+  } = props;
   let maxClass = 'booking-upper-left-dollar inline-block ';
   let avgClass = 'display-none inline-block';
   let avg;
@@ -15,7 +18,7 @@ const BookingUpper = (props) => {
       <div className="booking-upper-left">
         <div className={maxClass}>
           $
-          {props.maxRate}
+          {maxRate}
         </div>
         <div className={avgClass}>
           {avg}
@@ -26,7 +29,7 @@ const BookingUpper = (props) => {
       </div>
       <div className="booking-reviews">
         <div className="booking-reviews-star">
-          <img src="../img/star.png" height="11" />
+          <img src="../img/star.png" height="11" alt="small pink star" />
         </div>
         <div className="booking-reviews-rating">
           {reviewRating}
@@ -41,39 +44,52 @@ const BookingUpper = (props) => {
   );
 };
 
+BookingUpper.propTypes = {
+  // reviewRating: React.PropTypes.number,
+  // reviewNum: React.PropTypes.number,
+  // avgRate: React.PropTypes.number,
+  reviewRating: PropTypes.number.isRequired,
+  reviewNum: PropTypes.number.isRequired,
+  avgRate: PropTypes.number.isRequired,
+  maxRate: PropTypes.number.isRequired,
+};
+
 const CheckIn = (props) => {
-  const numGuests = props.Adults + props.Children;
-  // console.log('check in, props: ', props);
-  let guestText; let
-    displayForm;
-  numGuests > 1 ? guestText = ' guests' : guestText = ' guest';
-  const FormMainRow = function (category, desc) {
-    return (
-      <div className="guest-form-main-row">
-        <div className="guest-row-left inline-block float-left">
-          <div className="guest-row-left-upper">
-            {category}
-          </div>
-          <div className="guest-row-left-lower">
-            {desc}
-          </div>
+  // Infants IS actually used, just in the eval(category) line
+  const {
+    Adults, Children, Infants, checkIn, checkOut, showGuest, maxGuests, onNegClick, onPlusClick, onClose, onClickGuest,
+  } = props;
+  const nums = { Adults, Children, Infants };
+  const numGuests = Adults + Children;
+
+  const guestText = numGuests > 1 ? ' guests' : ' guest';
+
+  const FormMainRow = (category, desc) => (
+    <div className="guest-form-main-row">
+      <div className="guest-row-left inline-block float-left">
+        <div className="guest-row-left-upper">
+          {category}
         </div>
-        <div className="guest-row-right inline-block float-right">
-          <div className="guest-row-right-left-arrow guest-row-button inline-block " onClick={() => props.onNegClick(category)}>
-            <div className="guest-button-inner">-</div>
-          </div>
-          <div className="guest-row-right-mid inline-block ">
-            <div className="guest-row-val">
-              {props[category]}
-            </div>
-          </div>
-          <div className="guest-row-right-right-arrow guest-row-button inline-block " onClick={() => props.onPlusClick(category)}><div className="guest-button-inner">+</div></div>
+        <div className="guest-row-left-lower">
+          {desc}
         </div>
       </div>
-    );
-  };
+      <div className="guest-row-right inline-block float-right">
+        <div className="guest-row-right-left-arrow guest-row-button inline-block " role="button" onClick={() => onNegClick(category)} onKeyDown={() => onNegClick(category)} tabIndex={0}>
+          <div className="guest-button-inner">-</div>
+        </div>
+        <div className="guest-row-right-mid inline-block ">
+          <div className="guest-row-val">
+            {nums[category]}
+          </div>
+        </div>
+        <div className="guest-row-right-right-arrow guest-row-button inline-block " role="button" onClick={() => onPlusClick(category)} onKeyDown={() => onPlusClick(category)} tabIndex={0}><div className="guest-button-inner">+</div></div>
+      </div>
+    </div>
+  );
+
   const GuestForm = () => {
-    !props.showGuest ? displayForm = 'booking-guest-form display-false' : displayForm = 'booking-guest-form display-true';
+    const displayForm = !showGuest ? 'booking-guest-form display-false' : 'booking-guest-form display-true';
     return (
       <div className={displayForm}>
         <div className="guest-form-inner">
@@ -81,12 +97,12 @@ const CheckIn = (props) => {
           {FormMainRow('Children', 'Ages 2-12')}
           {FormMainRow('Infants', 'Under 2')}
           <div className="guest-form-main-row light-grey-text-11-5">
-            {props.maxGuests}
+            {maxGuests}
             {' '}
-            guests maximum. Infants don't count towards the number of guests.
+            guests maximum. Infants don&apos;t count towards the number of guests.
           </div>
           <div className="guest-form-last-row">
-            <div className="guest-form-close" onClick={() => props.onClose()}>
+            <div className="guest-form-close" role="button" onClick={() => onClose()} onKeyDown={() => onClose()} tabIndex={0}>
               Close
             </div>
           </div>
@@ -103,7 +119,7 @@ const CheckIn = (props) => {
             CHECK-IN
           </div>
           <div className="booking-check-in-field booking-field">
-            {props.checkIn || 'Add date'}
+            {checkIn || 'Add date'}
           </div>
         </div>
         <div className="booking-middle-upper-right">
@@ -114,11 +130,11 @@ const CheckIn = (props) => {
       // sum += this.props.cal[i].rate;
       // disc += this.props.cal[i].discPerc * this.props.cal[i].rate;d booking-field"
           >
-            {props.checkOut || 'Add date'}
+            {checkOut || 'Add date'}
           </div>
         </div>
       </div>
-      <div className="booking-middle-lower booking-header booking-guests" onClick={() => props.onClickGuest()}>
+      <div className="booking-middle-lower booking-header booking-guests" role="button" onClick={() => onClickGuest()} onKeyDown={() => onClickGuest()} tabIndex={0}>
         <div className="booking-guests-flex-parent">
           <div className="booking-guests-left">
             <div className="booking-header booking-guests-header">
@@ -131,7 +147,7 @@ const CheckIn = (props) => {
             </div>
           </div>
           <div className="booking-guests-right booking-arrow">
-            <img src="../img/small-arrow-transp.png" width="20" />
+            <img src="../img/small-arrow-transp.png" width="20" alt="down-facing arrow" />
           </div>
         </div>
       </div>
@@ -140,16 +156,34 @@ const CheckIn = (props) => {
   );
 };
 
+CheckIn.propTypes = {
+  Adults: PropTypes.number.isRequired,
+  Children: PropTypes.number.isRequired,
+  checkIn: PropTypes.string.isRequired,
+  checkOut: PropTypes.string.isRequired,
+  maxGuests: PropTypes.number.isRequired,
+  showGuest: PropTypes.bool.isRequired,
+  Infants: PropTypes.number.isRequired,
+  onNegClick: PropTypes.func.isRequired,
+  onPlusClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onClickGuest: PropTypes.func.isRequired,
+};
+
 const RenderButton = (props) => {
-  let text;
+  const { checkOut } = props;
+  const text = checkOut ? 'Reserve' : 'Check Availability';
   // console.log('render button: ', props);
-  props.checkOut ? text = 'Reserve' : text = 'Check Availability';
   return (
     <div className="check-button">
       {text}
     </div>
   );
 };
+
+RenderButton.propTypes = {
+  checkOut: PropTypes.string.isRequired
+}
 
 class BookingModule extends React.Component {
   constructor(props) {
@@ -207,7 +241,7 @@ class BookingModule extends React.Component {
     });
   }
 
-  handleIncreaseGuest(category) {
+  onPlusClick(category) {
     let amount = this.state[category];
     amount++;
     this.setState({
@@ -216,7 +250,7 @@ class BookingModule extends React.Component {
     this.setGuestNum();
   }
 
-  handleDecreaseGuest(category) {
+  onNegClick(category) {
     let amount = this.state[category];
     amount--;
     if (amount >= 0) {
@@ -359,8 +393,8 @@ class BookingModule extends React.Component {
             showGuest={this.state.showGuest}
             onClickGuest={() => this.handleGuestClick()}
             onClose={() => this.handleCloseForm()}
-            onNegClick={(i) => this.handleDecreaseGuest(i)}
-            onPlusClick={(i) => this.handleIncreaseGuest(i)}
+            onNegClick={(i) => this.onNegClick(i)}
+            onPlusClick={(i) => this.onPlusClick(i)}
           />
           <div className="check-button-div">
             <RenderButton checkOut={this.props.checkOut} />
