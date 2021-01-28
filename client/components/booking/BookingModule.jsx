@@ -292,7 +292,7 @@ class BookingModule extends React.Component {
     var tax = total * this.props.tax;
     const service = total * 0.15;
     avg = total / numNights;
-    console.log(this.props.tax, avg, maxAmt, calcDiscPerc, totalDisc, total, numNights);
+    // console.log(this.props.tax, avg, maxAmt, calcDiscPerc, totalDisc, total, numNights);
     this.setState({
       avgRate: avg,
       maxAmount: maxAmt,
@@ -367,7 +367,7 @@ class BookingModule extends React.Component {
         </div>
       );
     }
-    console.log('still waiting...');
+    // console.log('still waiting...');
   }
 
   render() {

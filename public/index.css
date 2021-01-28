@@ -52,7 +52,6 @@ button {
 .details{
   font-size: 90%;
   flex-basis: 55%;
-  height: 2000px;
   border-top: var(--detail-border);
 }
 

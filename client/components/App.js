@@ -33,7 +33,7 @@ class App extends React.Component {
   componentDidMount() {
     let propId = 44 || this.props.match.params.id;
     // let propId = 33;
-    console.log('my props id: ', propId);
+    // console.log('my props id: ', propId);
     this.fetchData(propId);
   }
   componentDidUpdate() {
@@ -46,7 +46,7 @@ class App extends React.Component {
       .then( res => res.json())
       .then(
         (results) => {
-          console.log('result: ', results);
+          // console.log('result: ', results);
           var data = results[0];
           this.setState({
             propId: propId,
@@ -127,7 +127,7 @@ class App extends React.Component {
     return maxRate;
   }
   handleClearDates() {
-    console.log('clearDates() clicked', this.state);
+    // console.log('clearDates() clicked', this.state);
     this.setState({
       checkInDate: null,
       checkOutDate: null,
@@ -137,7 +137,7 @@ class App extends React.Component {
   }
   handleDateClick(i) {
     var dateObj = new Date(i);
-    console.log('handleDateClick, i: ', i, dateObj);
+    // console.log('handleDateClick, i: ', i, dateObj);
     if(this.state.checkInDate) {
       var checkInObj = new Date(this.state.checkInDate);
       if(this.state.checkOutDate) {

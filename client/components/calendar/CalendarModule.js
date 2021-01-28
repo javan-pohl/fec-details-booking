@@ -57,8 +57,8 @@ class CalendarModule extends React.Component {
     }
 
     var dateI = this.props.dateIndex;
-    console.log('checkin: ', this.props.checkIn);
-    console.log('checkout: ', this.props.checkOut);
+    // console.log('checkin: ', this.props.checkIn);
+    // console.log('checkout: ', this.props.checkOut);
     
     var checkInObj = new Date(this.props.checkIn);
     var checkOutObj = new Date(this.props.checkOut);    
@@ -73,7 +73,7 @@ class CalendarModule extends React.Component {
         var dateValObj = new Date(dateValue);
         var dateValStr = dateValObj.toString();
         if (dateValObj >= this.props.today && this.props.cal[dateI].available) {
-          console.log('test 2....');
+          // console.log('test 2....');
           divClass = 'cal-days-inner cal-day-available-not';
           buttonClass = 'cal-days cal-days-available-not';
           if (!this.props.checkIn && this.checkMinStay(dateI) || this.props.checkOut && this.checkMinStay(dateI)) {
@@ -90,7 +90,7 @@ class CalendarModule extends React.Component {
             buttonClass += ' check-in-stay';
           }
           if (dateValObj > checkInObj && dateValObj < checkOutObj) {
-            console.log('in stay-day...');
+            // console.log('in stay-day...');
             buttonClass += ' stay-day';
           }
           if (dateValStr === checkOutStr) {
@@ -102,17 +102,17 @@ class CalendarModule extends React.Component {
           } 
           if (this.props.checkIn && (((dateValObj - checkInObj) / (1000*60*60*24)) >= this.props.minStay) && this.props.cal[dateI].available) {
             if (this.props.lastDateI === null || (this.props.lastDateI !== null && (dateI < this.props.lastDateI))) {
-              console.log('test 3....');
+              // console.log('test 3....');
               divClass = 'cal-days-inner cal-day-available';
               buttonClass = 'cal-days cal-days-available';
               clickFunction = () => this.props.onDateClick(dateValue);
             }  
           } 
           ///////////////////////////////////
-          console.log('test...', dateValObj, this.props.today, checkInObj, this.props.checkOut, checkOutObj);
+          // console.log('test...', dateValObj, this.props.today, checkInObj, this.props.checkOut, checkOutObj);
 
           if (this.props.checkIn && dateValObj < checkInObj && dateValObj >= this.props.today && this.checkMinStay(dateI)) {
-            console.log('test 4');
+            // console.log('test 4');
             divClass = 'cal-days-inner cal-day-available';
             buttonClass = 'cal-days cal-days-available';
             clickFunction = () => this.props.onDateClick(dateValue);
