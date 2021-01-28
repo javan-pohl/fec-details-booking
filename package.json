@@ -28,21 +28,16 @@
     "http-proxy-middleware": "^1.0.6",
     "jquery": "^3.5.1",
     "livereload": "^0.9.1",
-<<<<<<< HEAD
     "lodash": "^4.17.20",
-=======
->>>>>>> 30d0c5fa3397f86017c8ee344f24d304951ab9d2
     "mongodb": "^2.2.33",
     "mongoose": "^4.11.6",
     "morgan": "1.9.1",
     "mysql": "^2.18.1",
-<<<<<<< HEAD
     "prop-types": "^15.7.2",
-=======
->>>>>>> 30d0c5fa3397f86017c8ee344f24d304951ab9d2
     "pstree.remy": "^1.1.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "underscore": "^1.12.0"
   },
   "devDependencies": {

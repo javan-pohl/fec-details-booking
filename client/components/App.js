@@ -1,7 +1,7 @@
 import React from 'react';
 import Details from './details/Details.js';
 import Highlights from './highlights/Highlights.js';
-import BookingModule from './booking/BookingModule.js';
+import BookingModule from './booking/BookingModule.jsx';
 import Calendar from './calendar/Calendar.js';
 
 class App extends React.Component {
@@ -30,16 +30,26 @@ class App extends React.Component {
       key: 0,
     }
   }
-
   componentDidMount() {
-    fetch('http://localhost:3004/api/props/56')
+    let propId = 44 || this.props.match.params.id;
+    // let propId = 33;
+    // console.log('my props id: ', propId);
+    this.fetchData(propId);
+  }
+  componentDidUpdate() {
+    if (this.props.match.params.id !== this.state.propId) {
+      this.fetchData(this.props.match.params.id);
+    }
+  }
+  fetchData(propId) {
+    fetch('http://localhost:3004/api/props/' + propId)
       .then( res => res.json())
       .then(
         (results) => {
-          console.log(results);
-          var propId = 0;
-          var data = results[propId];
+          // console.log('result: ', results);
+          var data = results[0];
           this.setState({
+            propId: propId,
             propData: data,
             roomInfo: {
               numGuest: data.numGuest,
@@ -58,6 +68,35 @@ class App extends React.Component {
       )
       .catch( err => console.log('error: ... ', err))
   }
+
+
+  // componentDidMount() {
+  //   fetch('http://localhost:3004/api/props/56')
+  //     .then( res => res.json())
+  //     .then(
+  //       (results) => {
+  //         console.log(results);
+  //         var propId = 0;
+  //         var data = results[propId];
+  //         this.setState({
+  //           propData: data,
+  //           roomInfo: {
+  //             numGuest: data.numGuest,
+  //             numBedRooms: data.numBedRooms,
+  //             numBeds: data.numBeds,
+  //             numBaths: data.numBathRooms
+  //           },
+  //           hostName: data.hostName.firstName,
+  //           currentMonth: this.state.currentDate.getMonth(),
+  //           displayMonth: this.state.currentDate.getMonth(),
+  //           maxRate: this.getMaxRate(data.calendar),
+  //           taxRate: data.StateTaxRate + data.cityTaxRate + data.countyTaxRate,
+  //           isLoaded: true
+  //         })
+  //       }
+  //     )
+  //     .catch( err => console.log('error: ... ', err))
+  // }
   getLastAvailI(i) {
     var firstDateI = new Date(this.state.propData.calendar[0].date);
     // console.log(firstDateI);
@@ -88,7 +127,7 @@ class App extends React.Component {
     return maxRate;
   }
   handleClearDates() {
-    console.log('clearDates() clicked', this.state);
+    // console.log('clearDates() clicked', this.state);
     this.setState({
       checkInDate: null,
       checkOutDate: null,
@@ -98,7 +137,7 @@ class App extends React.Component {
   }
   handleDateClick(i) {
     var dateObj = new Date(i);
-    console.log('handleDateClick, i: ', i, dateObj);
+    // console.log('handleDateClick, i: ', i, dateObj);
     if(this.state.checkInDate) {
       var checkInObj = new Date(this.state.checkInDate);
       if(this.state.checkOutDate) {
