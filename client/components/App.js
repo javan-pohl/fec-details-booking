@@ -42,7 +42,7 @@ class App extends React.Component {
     }
   }
   fetchData(propId) {
-    fetch('http://localhost:3004/api/props/' + propId)
+    fetch('http://localhost:3002/api/props/' + propId)
       .then( res => res.json())
       .then(
         (results) => {
@@ -68,35 +68,6 @@ class App extends React.Component {
       )
       .catch( err => console.log('error: ... ', err))
   }
-
-
-  // componentDidMount() {
-  //   fetch('http://localhost:3004/api/props/56')
-  //     .then( res => res.json())
-  //     .then(
-  //       (results) => {
-  //         console.log(results);
-  //         var propId = 0;
-  //         var data = results[propId];
-  //         this.setState({
-  //           propData: data,
-  //           roomInfo: {
-  //             numGuest: data.numGuest,
-  //             numBedRooms: data.numBedRooms,
-  //             numBeds: data.numBeds,
-  //             numBaths: data.numBathRooms
-  //           },
-  //           hostName: data.hostName.firstName,
-  //           currentMonth: this.state.currentDate.getMonth(),
-  //           displayMonth: this.state.currentDate.getMonth(),
-  //           maxRate: this.getMaxRate(data.calendar),
-  //           taxRate: data.StateTaxRate + data.cityTaxRate + data.countyTaxRate,
-  //           isLoaded: true
-  //         })
-  //       }
-  //     )
-  //     .catch( err => console.log('error: ... ', err))
-  // }
   getLastAvailI(i) {
     var firstDateI = new Date(this.state.propData.calendar[0].date);
     // console.log(firstDateI);
