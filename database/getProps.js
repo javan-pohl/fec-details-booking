@@ -15,8 +15,10 @@ module.exports = {
       });
   },
   getById(req, res) {
+    console.log('in getById: ');
     const int = parseInt(req.params.propId, 10);
-    Prop.find({ propId: int })
+    console.log('int: ', int);
+    Prop.findOne({ propId: int })
       .catch((err) => {
         console.log('err', err);
         // db.close();
